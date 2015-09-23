@@ -1,0 +1,20 @@
+smartest.dashboard_form:
+  route_name: smartest.dashboard_form
+  title: '1. Dashboard'
+  base_route: smartest.dashboard_form
+smartest.test_form:
+  route_name: smartest.test_form
+  title: '3. Test case priorization'
+  base_route: smartest.dashboard_form
+smartest.settings_form:
+  route_name: smartest.settings_form
+  title: '2. Settings'
+  base_route: smartest.dashboard_form
+smartest.git_form:
+  route_name: smartest.git_form
+  title: '4. Git configurations'
+  base_route: smartest.dashboard_form
+smartest.feedback_form:
+  route_name: smartest.feedback_form
+  title: '5. Feedback'
+  base_route: smartest.dashboard_form

@@ -1,0 +1,42 @@
+smartest.dashboard_form:
+  path: /admin/config/development/testing-labs
+  defaults:
+    _title: SmarTest
+    _form: \Drupal\smartest\Form\SmartestDashboardForm
+  requirements:
+    _permission: 'administer unit tests'
+smartest.test_form:
+  path: /admin/config/development/testing-labs/list
+  defaults:
+    _title: '3. Test case priorization'
+    _form: \Drupal\smartest\Form\SmartestTestForm
+  requirements:
+    _permission: 'administer unit tests'
+smartest.settings_form:
+  path: /admin/config/development/testing-labs/settings
+  defaults:
+    _title: '2. Settings'
+    _form: \Drupal\smartest\Form\SmartestSettingsForm
+  requirements:
+    _permission: 'administer unit tests'
+smartest.git_form:
+  path: /admin/config/development/testing-labs/git-changes
+  defaults:
+    _title: '4. Git configurations'
+    _form: \Drupal\smartest\Form\SmartestGitForm
+  requirements:
+    _permission: 'administer unit tests'
+smartest.feedback_form:
+  path: /admin/config/development/testing-labs/feedback
+  defaults:
+    _title: '5. Feedback'
+    _form: \Drupal\smartest\Form\SmartestFeedbackForm
+  requirements:
+    _permission: 'access content'
+smartest.result_form:
+  path: '/admin/config/development/testing-labs/results/{test_id}'
+  defaults:
+    _title: 'Test Result'
+    _form: \Drupal\smartest\Form\SmartestResultForm
+  requirements:
+    _permission: 'administer unit tests'

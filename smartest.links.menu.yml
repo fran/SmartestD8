@@ -1,0 +1,10 @@
+smartest.dashboard_form:
+  route_name: smartest.dashboard_form
+  title: SmarTest
+  weight: -5
+  description: 'Order and run tests of enabled modules in Drupal. SmarTest helps you to accelerate the detection of faults.'
+  parent: system.admin_config_development
+smartest.result_form:
+  route_name: smartest.result_form
+  title: 'Test Result'
+  description: 'View result of tests.'
