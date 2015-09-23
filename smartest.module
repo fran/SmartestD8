@@ -1,0 +1,559 @@
+<?php
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_help().
+ */
+function smartest_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#smartest':
+      $output = '';
+      $output = t('Testing module by ISA Labs');
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function smartest_permission() {
+  return array(
+    'administer unit tests' => array(
+      'title' => t('Administer tests'),
+      'restrict access' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implements hook_theme().
+ */
+function smartest_theme() {
+  return array(
+    'smartest_test_table' => array(
+      'render element' => 'table',
+      'file' => 'smartest.pages.inc',
+    ),
+  );
+}
+
+/**
+ * Implements hook_requeriments().
+ *
+ * PHPLOC version: 2.1.3
+ * latests commit: 4b21840dfe
+ * branch: master.
+ *
+ */
+
+
+/**
+ * Implements hook_libraries_info().
+ */
+function smartest_libraries_info() {
+
+  // Expected to be extracted into 'sites/all/libraries/phploc'.
+  $libraries['phploc'] = array(
+    'name' => 'phploc',
+    'vendor url' => 'https://github.com/isa-group/phploc/blob/master/src/Analyser.php',
+    'download url' => 'https://github.com/isa-group/phploc/blob/master/src/Analyser.php',
+    'version arguments' => array(
+      'file' => 'Analyser.php',
+      'pattern' => '/Version (\d+)/',
+      'lines' => 3,
+    ),
+    'files' => array(
+      'php' => array('Analyser.php'),
+    ),
+  );
+  // Expected to be extracted into 'sites/all/libraries/php-code-coverage'.
+  $libraries['php-code-coverage'] = array(
+    'name' => 'php-code-coverage',
+    'vendor url' => 'https://github.com/sebastianbergmann/php-code-coverage',
+    'download url' => 'https://github.com/sebastianbergmann/php-code-coverage',
+    'version arguments' => array(
+      'file' => 'CodeCoverage.php',
+      'pattern' => '/Version (\d+)/',
+      'lines' => 3,
+    ),
+    'files' => array(
+      'php' => array('CodeCoverage.php', 'Driver.php', 'Exception.php', 'Report.php', 'Util.php'),
+    ),
+  );
+
+  // Expected to be extracted into 'sites/all/libraries/php-code-coverage'.
+  $libraries['gridster'] = array(
+    'name' => 'Gridster',
+    'vendor url' => 'http://gridster.net',
+    'download url' => 'http://gridster.net',
+    'files' => array(
+      'js' => array(
+        'dist/jquery.gridster.js',
+      ),
+      'css' => array(
+          'dist/jquery.gridster.css',
+      ),
+    ),
+    'version callback' => 'gridster_get_version',
+    'variants' => array(
+      'minified' => array(
+        'files' => array(
+          'js' => array(
+            'dist/jquery.gridster.min.js',
+          ),
+          'css' => array(
+            'dist/jquery.gridster.min.css',
+          ),
+        ),
+        'variant callback' => 'gridster_check_variant',
+        'variant arguments' => array(
+          'variant' => 'minified',
+        ),
+      ),
+      'with-extras' => array(
+        'files' => array(
+          'js' => array(
+            'dist/jquery.gridster.with-extras.js',
+          ),
+          'css' => array(
+            'dist/jquery.gridster.css',
+          ),
+        ),
+        'variant callback' => 'gridster_check_variant',
+        'variant arguments' => array(
+          'variant' => 'with-extras',
+        ),
+      ),
+      'with-extras-minified' => array(
+        'files' => array(
+          'js' => array(
+            'dist/jquery.gridster.with-extras.min.js',
+          ),
+          'css' => array(
+            'dist/jquery.gridster.css',
+          ),
+        ),
+        'variant callback' => 'gridster_check_variant',
+        'variant arguments' => array(
+          'variant' => 'with-extras',
+        ),
+      ),
+    ),
+  );
+
+  return $libraries;
+}
+
+function gridster_get_version() {
+  // no version info in the files.
+  return '1.0';
+}
+
+function gridster_check_variant($library = array(), $variant = FALSE) {
+  if (!$variant) {
+    return file_exists(libraries_get_path('gridster') . '/dist/jquery.gridster.js');
+  }
+  switch ($variant) {
+    case 'minified':
+      return file_exists(libraries_get_path('gridster') . '/dist/jquery.gridster.min.js');
+    case 'with-extras':
+      return file_exists(libraries_get_path('gridster') . '/dist/jquery.gridster.with-extras.js');
+    case 'with-extras-minified':
+      return file_exists(libraries_get_path('gridster') . '/dist/jquery.gridster.with-extras.min.js');
+  }
+  return FALSE;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function smartest_menu() {
+  $items['admin/config/development/testing-labs'] = array(
+    'title' => 'SmarTest',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('smartest_dashboard_form'),
+    'access arguments' => array('administer unit tests'),
+    'file' => 'smartest.board.inc',
+    'description' => 'Order and run tests of enabled modules in Drupal. SmarTest helps you to accelerate the detection of faults.',
+    'weight' => -5,
+  );
+  $items['admin/config/development/testing-labs/dashboard'] = array(
+    'title' => '1. Dashboard',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+  $items['admin/config/development/testing-labs/list'] = array(
+    'title' => '3. Test case priorization',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('smartest_test_form'),
+    'access arguments' => array('administer unit tests'),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'smartest.pages.inc',
+  );
+  $items['admin/config/development/testing-labs/settings'] = array(
+    'title' => '2. Settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('smartest_settings_form'),
+    'access arguments' => array('administer unit tests'),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'smartest.pages.inc',
+  );
+  $items['admin/config/development/testing-labs/git-changes'] = array(
+    'title' => '4. Git configurations',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('smartest_git_form'),
+    'access arguments' => array('administer unit tests'),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'smartest.git.inc',
+  );
+  $items['admin/config/development/testing-labs/feedback'] = array(
+    'title' => '5. Feedback',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('smartest_feedback_form', 5),
+    'access arguments' => array('access content'),
+    'type' => MENU_LOCAL_TASK,
+    'description' => 'Feedback for research group.',
+    'file' => 'smartest.feed.inc',
+  );
+  $items['admin/config/development/testing-labs/results/%'] = array(
+    'title' => 'Test Result',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('smartest_result_form', 5),
+    'description' => 'View result of tests.',
+    'access arguments' => array('administer unit tests'),
+    'file' => 'smartest.pages.inc',
+  );
+   
+  return $items;
+}
+
+ /**
+ * Actually runs tests.
+ *
+ * @param $test_list
+ *   List of tests to run.
+ * @param $reporter
+ *   Which reporter to use. Allowed values are: text, xml, html and drupal,
+ *   drupal being the default.
+ */
+ function smartest_run_tests($test_list, $reporter = 'drupal') {
+
+  $test_id = db_insert('simpletest_test_id')
+    ->useDefaults(array('test_id'))
+    ->execute();
+
+  // Clear out the previous verbose files.
+  file_unmanaged_delete_recursive('public://simpletest/verbose');
+
+  // Get the info for the simpletest test being run.
+  $simpletest_test = array_shift($test_list);
+  $simpletest_instance = new $simpletest_test();
+  array_unshift($test_list, $simpletest_test);
+  $info = $simpletest_instance->getInfo();
+
+  // @FIXME
+// l() expects a Url object, created from a route name or external URI.
+// $content['stop'] = array(
+//       '#type' => 'fieldset',
+//       '#id' => 'stop',
+//       '#description' => l(t('Stop process'), 'admin/config/development/testing-labs/results/' . $test_id),
+//     );
+
+
+  $batch = array(
+    'title' => t('Running tests') . ' ' . \Drupal::service("renderer")->render($content),
+    'operations' => array(
+      array('_smartest_batch_operation', array($test_list, $test_id, getdate())),
+    ),
+    'finished' => '_simpletest_batch_finished',
+    'css' => array(drupal_get_path('module', 'simpletest') . '/simpletest.css',
+                  drupal_get_path('module', 'smartest') . '/styles/batch.css'),
+    'init_message' => t('Processing test @num of @max - %test.', array('%test' => $info['name'], '@num' => '1', '@max' => count($test_list))),
+  );
+  batch_set($batch);
+
+  \Drupal::moduleHandler()->invokeAll('test_group_started');
+  update_test_times();
+  return $test_id;
+}
+
+
+/**
+ * Batch operation callback.
+ */
+function _smartest_batch_operation($test_list_init, $test_id, $date, &$context) {
+  simpletest_classloader_register();
+
+  $date1 = new DateTime($date['year'] . '-' . $date['mon'] . '-' . $date['mday'] . ' ' . $date['hours'] . ':' . $date['minutes'] . ':' . $date['seconds']);
+
+  // Get working values.
+  if (!isset($context['sandbox']['max'])) {
+    // simpletest iteration: initialize working values.
+    $test_list = $test_list_init;
+    $context['sandbox']['max'] = count($test_list);
+    $test_results = array('#pass' => 0, '#fail' => 0, '#exception' => 0, '#debug' => 0);
+  }
+  else {
+    // Nth iteration: get the current values where we last stored them.
+    $test_list = $context['sandbox']['tests'];
+    $test_results = $context['sandbox']['test_results'];
+  }
+  $max = $context['sandbox']['max'];
+
+
+  // Perform the next test.
+  $test_class = array_shift($test_list);
+  $test = new $test_class($test_id);
+  $test->run();
+  $size = count($test_list);
+  $info = $test->getInfo();
+
+
+  $field = $date['mday'] . ' ' . $date['mon'] . ' ' . $date['year'] . ' - ' . $date['hours'] . ':' . $date['minutes'];
+  db_update('smartest_statistic')
+    ->fields( array('last_execution' => $field))
+    ->condition('module', str_replace(' ', '_', strtolower($info['group'])), '=')
+    ->execute();
+
+  \Drupal::moduleHandler()->invokeAll('test_finished', [$test->results]);
+
+  // Gather results and compose the report.
+  $test_results[$test_class] = $test->results;
+  foreach ($test_results[$test_class] as $key => $value) {
+    $test_results[$key] += $value;
+  }
+  $test_results[$test_class]['#name'] = $info['name'];
+  $test_results[$test_class]['#group'] = str_replace(' ', '_', strtolower($info['group']));
+  $items = array();
+  $table_items = array();
+  $actual_group = '';
+
+  foreach (\Drupal\Core\Render\Element::children($test_results) as $class) {
+    array_unshift($items, '<div class="simpletest-' . ($test_results[$class]['#fail'] + $test_results[$class]['#exception'] ? 'fail' : 'pass') . '">' . t('@name: @summary', array('@name' => $test_results[$class]['#name'], '@summary' => _simpletest_format_summary_line($test_results[$class]))) . '</div>');
+    
+    if ($actual_group != $test_results[$class]['#group']) {
+      db_update('smartest_statistic')
+        ->fields(array( 'passes' => 0, 'fails' => 0, 'exceptions' => 0 ))
+        ->condition('module', $test_results[$class]['#group'], '=')
+        ->execute();      
+    }
+
+    db_update('smartest_statistic')
+      ->fields(array('passes' => $test_results[$class]['#pass'], 'fails' => $test_results[$class]['#fail'], 'exceptions' => $test_results[$class]['#exception']))
+      ->expression('passes', 'passes + :Pamount', array(':Pamount' => $test_results[$class]['#pass']))
+      ->expression('fails', 'fails + :Famount', array(':Famount' => $test_results[$class]['#fail']))
+      ->expression('exceptions', 'exceptions + :Eamount', array(':Eamount' => $test_results[$class]['#exception']))
+      ->condition('module', $test_results[$class]['#group'] , '=')
+      ->execute();
+
+    $actual_group = $test_results[$class]['#group'];
+
+    $content = array();
+    $query = db_select('simpletest')
+      ->fields('simpletest', array('test_class', 'status', 'message', 'message_group', 'line', 'file'))
+      ->condition('test_id', $test_id, '=')
+      ->condition('test_class', $class, '=')
+      ->orderBy('test_class')
+      ->execute();
+    $header = array(t('Test class name'), t('Status'), t('Message'), t('Message group'), t('Line'), t('File'));
+    $rows = array();
+    while ($row = $query->fetchAssoc()) {
+      $rows[] = $row;
+    }
+
+    $content['results'][$class] = array(
+        '#type' => 'fieldset',
+        '#title' => t($class),
+        '#collapsible' => TRUE, 
+        '#collapsed' => TRUE,
+      );
+    $content['results'][$class]['table'] = array(
+        '#theme' => 'table',
+        '#header' => $header,
+        '#rows' => $rows,
+      );
+    array_unshift($table_items, $content);
+  }
+
+  $context['message'] = t('Processed test @num of @max - %test.', array('%test' => $info['name'], '@num' => $max - $size, '@max' => $max));
+
+  $context['message'] .= '<div class="simpletest-' . ($test_results['#fail'] + $test_results['#exception'] ? 'fail' : 'pass') . '">Overall results: ' . _simpletest_format_summary_line($test_results) . '</div>';
+
+  for ($i=0; $i<sizeof($items); $i++) {
+    $context['message'] .= $items[$i];
+    $context['message'] .= \Drupal::service("renderer")->render($table_items[$i]);
+  } 
+  
+  // Save working values for the next iteration.
+  $context['sandbox']['tests'] = $test_list;
+  $context['sandbox']['test_results'] = $test_results;
+  // The test_id is the only thing we need to save for the report page.
+  $context['results']['test_id'] = $test_id;
+
+  // Multistep processing: report progress.
+  $context['finished'] = 1 - $size / $max;
+
+  //TimeOut 
+  $date = getdate();
+  $date2 = new DateTime(getdate()['year'] . '-' . $date['mon'] . '-' . $date['mday'] . ' ' . $date['hours'] . ':' . $date['minutes'] . ':' . $date['seconds']);
+
+  $query_timeout = db_select('smartest_cache')
+    ->fields('smartest_cache', array('criteria', 'type'))
+    ->condition('cookie', 'timeout', '=')
+    ->execute()
+    ->fetchAssoc();
+
+  if ($query_timeout['criteria'] != 'none') {
+    if ($query_timeout['type'] == 'h') {
+      $query_timeout['criteria'] = $query_timeout['criteria'] * 60;
+    }
+    if ($date1->diff($date2)->i >= $query_timeout['criteria']) {
+      $context['finished'] = 1;
+    }
+  }
+
+  $time_sec = ($date1->diff($date2)->s);
+  try{
+    db_insert('smartest_times')
+      ->fields(array(
+        'class' => $test_class,
+        'test_group' =>  str_replace(' ', '_', strtolower($info['group'])),
+        'time' => $time_sec,
+      ))->execute();
+  }catch (Exception $e) {
+    db_update('smartest_times')
+      ->fields(array(
+        'time' => $time_sec,
+      ))
+      ->condition('class', $test_class, '=')
+      ->execute();
+  }
+}
+
+function update_test_times() {
+  $query = db_select('smartest_times')
+    ->fields('smartest_times', array('test_group', 'time'))
+    ->orderBy('test_group')
+    ->execute();
+
+  $actual = '';
+  $new    = '';
+  $sum    = 0;
+  while ($row = $query->fetchAssoc()) {
+    $new = $row['test_group'];
+    if ($new != $actual) {
+      $sum    = 0;
+      $actual = $new;
+    }
+    $sum = $sum + $row['time'];
+    db_update('smartest_statistic')
+      ->fields(array('test_execution_time' => $sum))
+      ->condition('module', $actual, '=')
+      ->execute();
+  }
+}
+
+function smartest_form_smartest_result_form_alter(&$form, &$form_state) {
+  $test_id = $form_state['build_info']['args'][0];
+  module_load_include('process.inc', 'code_coverage');
+  if (code_coverage_process($test_id)) {
+    // @FIXME
+// l() expects a Url object, created from a route name or external URI.
+// drupal_set_message(check_plain(t('View the !coverage_report_link for the test run.', array('!coverage_report_link' => l(t('code coverage report'), 'code_coverage/' . $test_id)))));
+
+  }
+}
+
+function smartest_cron() {
+    mining_repository();
+}
+
+function mining_repository() {
+  $batch = array(
+    'title' => t('Mining drupal repository'),
+    'operations' => array(
+      array('_smartest_batch_mining', array()),
+    ),
+    'finished' => '',
+    'progress_message' => t('Processing Drupal repository...'),
+    'css' => array(drupal_get_path('module', 'simpletest') . '/simpletest.css'),
+    'init_message' => t('Processing Drupal repository...'),
+  );
+  batch_set($batch);
+}
+
+function _smartest_batch_mining(&$context) {
+  set_time_limit(50000);
+  $query_client = db_select('smartest_cache')
+      ->fields('smartest_cache', array('criteria'))
+      ->condition('cookie', 'client_id', '=')
+      ->execute()
+      ->fetchAssoc();
+    $query_secret = db_select('smartest_cache')
+      ->fields('smartest_cache', array('criteria'))
+      ->condition('cookie', 'secret_id', '=')
+      ->execute()
+      ->fetchAssoc();
+    $auth = '';
+    if ($query_client['criteria'] != '' && $query_secret['criteria'] != '') {
+      $auth = 'client_id=' . $query_client['criteria'] . '&client_secret=' . $query_secret['criteria'];
+    } 
+  db_update('smartest_statistic')
+    ->fields(array('git_changes' => 0))
+    ->execute();
+  $enables = module_list();
+  for ($page=1; $page < 550; $page++) { 
+    $context['finished'] = 1 - (1 - $page / 550);
+    $url = 'https://api.github.com/repos/drupal/drupal/commits?page=' . $page . '&' . $auth;
+    try{
+      // @FIXME
+// drupal_http_request() has been replaced by the Guzzle HTTP client, which is bundled
+// with Drupal core.
+// 
+// 
+// @see https://www.drupal.org/node/1862446
+// @see http://docs.guzzlephp.org/en/latest
+// $value = drupal_http_request($url, $options = array());
+
+      $json = json_decode($value->data, TRUE);
+      foreach ($json as $commit => $commit_array) {
+        $commit_url = $commit_array['url'];
+        try{
+          // @FIXME
+// drupal_http_request() has been replaced by the Guzzle HTTP client, which is bundled
+// with Drupal core.
+// 
+// 
+// @see https://www.drupal.org/node/1862446
+// @see http://docs.guzzlephp.org/en/latest
+// $commit_value = drupal_http_request($commit_url . '?' . $auth, $options = array());
+
+          $commit_json = json_decode($commit_value->data, TRUE);
+          if (in_array('files', $commit_json['files'][0])) {
+            $file_array = $commit_json['files'];
+            foreach ($file_array as $file => $val_file) {
+              $file_root = $val_file['filename'];
+              if (strpos($file_root, 'modules') !== FALSE) {
+                $module_name = explode('/', explode('modules/', $file_root)[1])[0];
+                if (in_array($module_name, $enables)) {
+                  db_update('smartest_statistic')
+                    ->fields(array('git_changes' => 0))
+                    ->expression('git_changes', 'git_changes + :amount', array(':amount' => 1))
+                    ->condition('module', $module_name, '=')
+                    ->execute();
+                }
+              }
+            }
+          }
+        }catch (Exception $e) {
+          drupal_set_message(t('ERROR Accesing a commit'));
+        }     
+      } 
+    }catch (Exception $e) {
+      drupal_set_message(t('ERROR1 Accesing a repository commit'));
+    }
+  }
+    
+}
+
