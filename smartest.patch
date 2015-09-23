@@ -1,0 +1,20 @@
+diff --git a/code_coverage.install b/code_coverage.install
+index 4da53ec..c358b5e 100644
+--- a/code_coverage.install
++++ b/code_coverage.install
+@@ -37,13 +37,13 @@ function code_coverage_requirements($phase) {
+     'severity' => $xdebug ? REQUIREMENT_OK : REQUIREMENT_ERROR,
+   );
+ 
+-  $patched = function_exists('code_coverage_record');
++  /*$patched = function_exists('code_coverage_record');
+   $requirements['code_coverage_patch'] = array(
+     'title' => $t('Code coverage: core patch'),
+     'value' => $patched ? $t('Applied') : $t('Missing'),
+     'severity' => $patched ? REQUIREMENT_OK : REQUIREMENT_ERROR,
+   );
+-  if (!$patched) $requirements['code_coverage_patch']['description'] = t('Please apply the <a href="!link">code_coverage.patch</a> to Drupal core.', array('!link' => $base_url . '/' . drupal_get_path('module', 'code_coverage') . '/code_coverage.patch'));
++  if (!$patched) $requirements['code_coverage_patch']['description'] = t('Please apply the <a href="!link">code_coverage.patch</a> to Drupal core.', array('!link' => $base_url . '/' . drupal_get_path('module', 'code_coverage') . '/code_coverage.patch'));*/
+ 
+   return $requirements;
+ }

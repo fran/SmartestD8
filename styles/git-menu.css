@@ -1,0 +1,11 @@
+#edit-git-description {
+	padding: 0;
+	border: none;
+}
+fieldset {
+	border-radius: 10px;
+}
+help {
+	font-size: 15px;
+	margin-left: 20px;
+}

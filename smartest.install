@@ -1,0 +1,574 @@
+<?php
+/**
+ * @file
+ */
+function smartest_requirements($phase) {
+  global $base_url;
+  $requirements = array();
+  $t = 't';
+
+  $phploc = isset(libraries_get_libraries()['phploc']);
+  $requirements['phploc'] = array(
+    'title' => $t('phploc'),
+    'value' => $phploc ? $t('Installed') : $t('Missing'),
+    'severity' => $phploc ? REQUIREMENT_OK : REQUIREMENT_ERROR,
+  );
+
+  if (!$phploc) {
+    $requirements['phploc']['description'] = t('Please install the Analyser class of phploc library %url.', array('%url' => 'https://github.com/isa-group/phploc/blob/master/src/Analyser.php'));
+  }
+
+  return $requirements;
+}
+/**
+ * Implements hook_schema().
+ */
+function smartest_schema() {
+  $schema = array();
+  $schema['smartest_statistic'] = array(
+    'description' => 'Stores smartest statistic fields',
+    'fields' => array(
+      'module'  => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Primary Key: Module name.',
+      ),
+      'loc' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Lines of Code.',
+      ),
+      'cc' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Ciclomatic complexity.',
+      ),
+      'cloc' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Comment lines of code.',
+      ),
+      'lloc' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Logical lines of code.',
+      ),
+      'last_execution' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '00-00-0000 00:00',
+        'description' => 'Test last execution.',
+      ),
+      'test_execution_time' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'Test execution test.',
+      ),
+      'passes' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'number of test are passed.',
+      ),
+      'fails' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'number of test are fails.',
+      ),
+      'exceptions' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'number of test are exceptions.',
+      ),
+      'methods' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'number of methods.',
+      ),
+      'methods_call' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'number of call to methods.',
+      ),
+      'executed' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'number of call to methods.',
+      ),
+      'executable' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'number of call to methods.',
+      ),
+      'coverage' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'number of call to methods.',
+      ),
+      'git_changes' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'number of call to methods.',
+      ),
+    ),
+  'primary key' => array('module'),
+  );
+
+  $schema['smartest_cache'] = array(
+    'description' => 'Stores smartest statistic cookies',
+    'fields' => array(
+      'cookie'  => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => 'statistic_form_cookie',
+        'description' => 'Primary Key: Identifier.',
+      ),
+      'modules' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => 'ALL',
+        'description' => 'Modules selected.',
+      ),
+      'criteria' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => 'LOC',
+        'description' => 'Creiteria selected.',
+      ),
+      'type' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => 'column',
+        'description' => 'Graphical type.',
+      ),
+    ),
+  'primary key' => array('cookie'),
+  );
+
+    $schema['smartest'] = array(
+    'description' => 'Stores simpletest messages',
+    'fields' => array(
+      'message_id'  => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique simpletest message ID.',
+      ),
+      'test_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Test ID, messages belonging to the same ID are reported together',
+      ),
+      'test_class' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The name of the class that created this message.',
+      ),
+      'status' => array(
+        'type' => 'varchar',
+        'length' => 9,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Message status. Core understands pass, fail, exception.',
+      ),
+      'message' => array(
+        'type' => 'text',
+        'not null' => TRUE,
+        'description' => 'The message itself.',
+      ),
+      'message_group' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The message group this message belongs to. For example: warning, browser, user.',
+      ),
+      'function' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Name of the assertion function or method that created this message.',
+      ),
+      'line' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Line number on which the function is called.',
+      ),
+      'file' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Name of the file where the function is called.',
+      ),
+    ),
+    'primary key' => array('message_id'),
+    'indexes' => array(
+      'reporter' => array('test_class', 'message_id'),
+    ),
+  );
+  $schema['smartest_prioritization'] = array(
+    'description' => 'Stores test class prioritization.',
+    'fields' => array(
+      'id'  => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => 'prioritization_test',
+        'description' => 'Primary Key.',
+      ),
+      'last_variable' => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => 'loc',
+        'description' => 'The last variable to priorize during testing.',
+      ),
+      'last_order' => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => 'DESC',
+        'description' => 'The last order to priorize during testing.',
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+  $schema['smartest_times'] = array(
+    'description' => 'Stores tests class times.',
+    'fields' => array(
+      'class'  => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Primary Key.',
+      ),
+      'test_group' => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Test class group.',
+      ),
+      'time' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Execution time in seconds.',
+      ),
+    ),
+    'primary key' => array('class'),
+  );
+    $schema['smartest_widget'] = array(
+    'description' => 'Stores widget dashboard configurations.',
+    'fields' => array(
+      'title'  => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Primary Key.',
+      ),
+      'widget_type' => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'cloud or chart.',
+      ),
+      'criteria1' => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Widget criteria.',
+      ),
+      'criteria2' => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Widget criteria.',
+      ),
+      'modules' => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Widget modules.',
+      ),
+      'n_element' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'number of elements to show in the widget.',
+      ),
+      'type' => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'line or column (if is a chart case).',
+      ),
+      'dashboard_name' => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'dashboard name associated.',
+      ),
+      'order' => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => 'DESC',
+        'description' => 'Order of variables, ASC or DESC.',
+      ),
+    ),
+    'primary key' => array('title', 'dashboard_name'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Install, update and uninstall functions for the smartest module.
+ */
+function smartest_install() {
+  // Add a default entries.
+  $fields = array(
+    'cookie'    => 'statistic_form_cookie',
+    'modules' => 'ALL',
+    'criteria'     => 'ALL',
+    'type' => 'column',
+  );
+  db_insert('smartest_cache')
+    ->fields($fields)
+    ->execute();
+
+  $fields = array(
+    'cookie'    => 'auth',
+    'modules' => 'ALL',
+    'criteria'     => 'ALL',
+    'type' => 'false',
+  );
+  db_insert('smartest_cache')
+    ->fields($fields)
+    ->execute();
+
+  $fields = array(
+    'cookie'    => 'permission_cookie',
+    'modules' => 'none',
+    'criteria'     => 'permision',
+    'type' => 'default',
+  );
+  db_insert('smartest_cache')
+    ->fields($fields)
+    ->execute();
+
+  $fields = array(
+    'cookie'    => 'git_url',
+    'modules' => 'none',
+    'criteria'     => 'https://api.github.com/repos/drupal/drupal/commits',
+    'type' => 'none',
+  );
+  db_insert('smartest_cache')
+    ->fields($fields)
+    ->execute();
+
+  $fields = array(
+    'cookie'    => 'client_id',
+    'modules' => 'none',
+    'criteria'     => 'none',
+    'type' => 'none',
+  );
+  db_insert('smartest_cache')
+    ->fields($fields)
+    ->execute();
+
+  $fields = array(
+    'cookie'    => 'secret_id',
+    'modules' => 'none',
+    'criteria'     => 'none',
+    'type' => 'none',
+  );
+  db_insert('smartest_cache')
+    ->fields($fields)
+    ->execute();
+
+  $fields_time = array(
+    'cookie'    => 'timeout',
+    'modules' => 'none',
+    'criteria'     => 'none',
+    'type' => 'none',
+  );
+  db_insert('smartest_cache')
+    ->fields($fields_time)
+    ->execute();
+
+  $fields_mod = array(
+    'cookie'    => 'modules_number',
+    'modules' => '5',
+    'criteria'     => 'none',
+    'type' => 'none',
+  );
+  db_insert('smartest_cache')
+    ->fields($fields_mod)
+    ->execute();
+
+  $fields_wgt = array(
+    'cookie'    => 'dashboard_page',
+    'modules' => 'none',
+    'criteria'     => 'none',
+    'type' => 'default',
+  );
+  db_insert('smartest_cache')
+    ->fields($fields_wgt)
+    ->execute(); 
+
+  $fields_prior = array(
+    'id'    => 'prioritization_test',
+    'last_variable' => 'loc',
+    'last_order'  => 'DESC',
+  );
+  db_insert('smartest_prioritization')
+    ->fields($fields_prior)
+    ->execute();
+
+  calculate_stats();
+
+  $fields_widget1 = array(
+    'title'    => 'loc-cc',
+    'widget_type' => 'cloud',
+    'criteria1'     => 'loc',
+    'criteria2'     => 'cc',
+    'modules'     => 'ALL',
+    'n_element'     => 5,
+    'type' => 'column',
+    'dashboard_name'     => 'default',
+  );
+  $fields_widget2 = array(
+    'title'    => 'Lines-of-code',
+    'widget_type' => 'chart',
+    'criteria1'     => 'loc',
+    'criteria2'     => 'none',
+    'modules'     => 'ALL',
+    'n_element'     => 5,
+    'type' => 'column',
+    'dashboard_name'     => 'default',
+  );
+  $fields_widget3 = array(
+    'title'    => 'Ciclomatic-complexity',
+    'widget_type' => 'chart',
+    'criteria1'     => 'cc',
+    'criteria2'     => 'none',
+    'modules'     => 'ALL',
+    'n_element'     => 5,
+    'type' => 'column',
+    'dashboard_name'     => 'default',
+  );
+  $fields_widget4 = array(
+    'title'    => 'Last-tests-executions',
+    'widget_type' => 'chart',
+    'criteria1'     => 'test',
+    'criteria2'     => 'none',
+    'modules'     => 'ALL',
+    'n_element'     => 5,
+    'type' => 'column',
+    'dashboard_name'     => 'default',
+  );
+  $fields_widget5 = array(
+    'title'    => 'Last-tests-executions-(Passed)',
+    'widget_type' => 'chart',
+    'criteria1'     => 'passes',
+    'criteria2'     => 'none',
+    'modules'     => 'ALL',
+    'n_element'     => 5,
+    'type' => 'column',
+    'dashboard_name'     => 'default',
+  );
+  $fields_widget6 = array(
+    'title'    => 'Header',
+    'widget_type' => 'main_header',
+    'criteria1'     => 'none',
+    'criteria2'     => 'none',
+    'modules'     => 'ALL',
+    'n_element'     => 5,
+    'type' => 'column',
+    'dashboard_name'     => 'default',
+  );
+  db_insert('smartest_widget')
+    ->fields($fields_widget1)
+    ->execute();
+  db_insert('smartest_widget')
+    ->fields($fields_widget2)
+    ->execute();
+  db_insert('smartest_widget')
+    ->fields($fields_widget3)
+    ->execute();
+  db_insert('smartest_widget')
+    ->fields($fields_widget4)
+    ->execute();
+  db_insert('smartest_widget')
+    ->fields($fields_widget5)
+    ->execute();
+  db_insert('smartest_widget')
+    ->fields($fields_widget6)
+    ->execute();
+}
+
+function calculate_stats() {
+  drupal_set_time_limit( 60 * 5000 );
+  libraries_load('phploc');
+
+  $modules = module_list();
+  $files = array();
+
+  foreach ($modules as $module => $value) {
+    $analyser = new Analyser;
+    $files = file_scan_directory(drupal_get_path("module", $module), '/.*' . $module . '.*\.inc$|.*' . 
+      $module . '.*\.module$|.*' . $module . '.*\.php$|.*' . $module . '.*\.test$|.*' . $module . '.*\.install$/');
+    $files_root = array();
+    foreach ($files as $file => $f) {
+      $files_root[$file] = $file;
+    }
+
+    $results = $analyser->countFiles($files_root, FALSE);
+
+    $fields = array(
+      'module'    => $module,
+      'loc' => $results['ncloc'],
+      'cc' => $results['methodCcnMax'],
+      'cloc' => $results['cloc'],
+      'lloc' => $results['lloc'],
+     );
+    db_insert('smartest_statistic')
+      ->fields($fields)
+      ->execute();
+  }
+}

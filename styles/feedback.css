@@ -1,0 +1,19 @@
+#edit-name-line, #edit-organization-line {
+	width: 700px;
+	 padding: 0;
+}
+
+#edit-name[type="text"], #edit-organization[type="text"] {
+  	margin-left: 100px;
+}
+
+#edit-name, label[for="edit-name"], #edit-organization, label[for="edit-organization"] {
+	position: absolute;
+}
+
+#edit-submit {
+	margin-left: 20px;
+}
+fieldset {
+	border-radius: 10px;
+}

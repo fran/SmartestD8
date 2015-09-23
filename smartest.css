@@ -1,0 +1,33 @@
+.form-item.form-type-textfield.form-item-input {
+	margin-top: 1px;
+	position: absolute;
+	left: 0;
+	margin-left: 16px;
+}
+.form-item.form-type-select.form-item-selection {
+	margin: 0;
+}
+.form-item.form-type-select.form-item-meassure {
+	position: relative;
+	float: left;
+	margin-left: 100px;
+}
+#edit-custom, #edit-time {
+	display: inline-block;
+	width: 340px;
+	height: 120pxpx;
+	float: left;
+  	margin-right: 15px;
+}
+#edit-table {
+  	padding: 0;	
+}
+fieldset {
+	border-radius: 10px;
+}
+h-titles {
+	text-transform: none;
+}
+#edit-meassure {
+	margin-left: 20px;
+}

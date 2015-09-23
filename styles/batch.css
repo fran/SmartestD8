@@ -1,0 +1,21 @@
+#overlay-title, .page-title {
+	width: 90%;
+}
+fieldset[id='stop'] {
+	background-color: white;
+  	border-radius: 10px;
+ 	padding-left: 15px;
+  	padding-right: 15px;
+  	text-decoration: blink;
+  	/*position: absolute;*/
+  	float: right;
+  	padding-top: 5px;
+  	padding-bottom: 5px;
+  	margin: 0;
+}	
+fieldset[id='stop'] div.fieldset-wrapper {
+	padding: 0;
+}
+fieldset[id='stop'] div.fieldset-wrapper div.fieldset-description a {
+	text-decoration: blink;
+}
