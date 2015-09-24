@@ -41,27 +41,20 @@ class SmartestSettingsForm extends ConfigFormBase {
       '#type' => 'fieldset',
       '#title' => t('General'),
     ];
-    // @FIXME
-    // // @FIXME
-    // // This looks like another module's variable. You'll need to rewrite this call
-    // // to ensure that it uses the correct configuration object.
-    // $form['general']['simpletest_clear_results'] = array(
-    //     '#type' => 'checkbox',
-    //     '#title' => t('Clear results after each complete test suite run'),
-    //     '#description' => t('By default SimpleTest will clear the results after they have been viewed on the results page, but in some cases it may be useful to leave the results in the database. The results can then be viewed at <em>admin/config/development/testing/[test_id]</em>. The test ID can be found in the database, simpletest table, or kept track of when viewing the results the first time. Additionally, some modules may provide more analysis or features that require this setting to be disabled.'),
-    //     '#default_value' => variable_get('simpletest_clear_results', TRUE),
-    //   );
 
-    // @FIXME
-    // // @FIXME
-    // // This looks like another module's variable. You'll need to rewrite this call
-    // // to ensure that it uses the correct configuration object.
-    // $form['general']['simpletest_verbose'] = array(
-    //     '#type' => 'checkbox',
-    //     '#title' => t('Provide verbose information when running tests'),
-    //     '#description' => t('The verbose data will be printed along with the standard assertions and is useful for debugging. The verbose data will be erased between each test suite run. The verbose data output is very detailed and should only be used when debugging.'),
-    //     '#default_value' => variable_get('simpletest_verbose', TRUE),
-    //   );
+   $form['general']['simpletest_clear_results'] = array(
+       '#type' => 'checkbox',
+       '#title' => t('Clear results after each complete test suite run'),
+       '#description' => t('By default SimpleTest will clear the results after they have been viewed on the results page, but in some cases it may be useful to leave the results in the database. The results can then be viewed at <em>admin/config/development/testing/[test_id]</em>. The test ID can be found in the database, simpletest table, or kept track of when viewing the results the first time. Additionally, some modules may provide more analysis or features that require this setting to be disabled.'),
+       '#default_value' => \Drupal::config('smartest.settings')->get('simpletest_clear_results')
+   );
+
+   $form['general']['simpletest_verbose'] = array(
+       '#type' => 'checkbox',
+       '#title' => t('Provide verbose information when running tests'),
+       '#description' => t('The verbose data will be printed along with the standard assertions and is useful for debugging. The verbose data will be erased between each test suite run. The verbose data output is very detailed and should only be used when debugging.'),
+       '#default_value' => \Drupal::config('smartet.tests')->get('simpletest_verbose'),
+     );
 
 
     $form['httpauth'] = [
@@ -71,35 +64,24 @@ class SmartestSettingsForm extends ConfigFormBase {
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
     ];
-    // @FIXME
-    // // @FIXME
-    // // This looks like another module's variable. You'll need to rewrite this call
-    // // to ensure that it uses the correct configuration object.
-    // $form['httpauth']['simpletest_httpauth_method'] = array(
-    //     '#type' => 'select',
-    //     '#title' => t('Method'),
-    //     '#options' => array(
-    //       CURLAUTH_BASIC => t('Basic'),
-    //       CURLAUTH_DIGEST => t('Digest'),
-    //       CURLAUTH_GSSNEGOTIATE => t('GSS negotiate'),
-    //       CURLAUTH_NTLM => t('NTLM'),
-    //       CURLAUTH_ANY => t('Any'),
-    //       CURLAUTH_ANYSAFE => t('Any safe'),
-    //     ),
-    //     '#default_value' => variable_get('simpletest_httpauth_method', CURLAUTH_BASIC),
-    //   );
 
-    // @FIXME
-    // // @FIXME
-    // // This looks like another module's variable. You'll need to rewrite this call
-    // // to ensure that it uses the correct configuration object.
-    // $username = variable_get('simpletest_httpauth_username');
+     $form['httpauth']['simpletest_httpauth_method'] = array(
+         '#type' => 'select',
+         '#title' => t('Method'),
+         '#options' => array(
+           CURLAUTH_BASIC => t('Basic'),
+           CURLAUTH_DIGEST => t('Digest'),
+           CURLAUTH_GSSNEGOTIATE => t('GSS negotiate'),
+           CURLAUTH_NTLM => t('NTLM'),
+           CURLAUTH_ANY => t('Any'),
+           CURLAUTH_ANYSAFE => t('Any safe'),
+         ),
+         '#default_value' => \Drupal::config('smartest.settings')->get('simpletest_httpauth_method'),
+       );
 
-    // @FIXME
-    // // @FIXME
-    // // This looks like another module's variable. You'll need to rewrite this call
-    // // to ensure that it uses the correct configuration object.
-    // $password = variable_get('simpletest_httpauth_password');
+
+     $username = \Drupal::config('smartest.settings')->get('simpletest_httpauth_username');
+     $password = \Drupal::config('smartest.settings')->get('simpletest_httpauth_password');
 
     $form['httpauth']['simpletest_httpauth_username'] = [
       '#type' => 'textfield',
