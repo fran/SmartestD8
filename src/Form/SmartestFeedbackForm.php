@@ -21,16 +21,6 @@ class SmartestFeedbackForm extends FormBase {
   }
 
   public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
-    // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_css(drupal_get_path('module', 'smartest') . '/styles/feedback.css');
-
-
     $query_permission = db_select('smartest_cache')
       ->fields('smartest_cache', ['type'])
       ->condition('cookie', 'permission_cookie', '=')
@@ -40,6 +30,8 @@ class SmartestFeedbackForm extends FormBase {
     if ($query_permission['type'] == 'default') {
       $permision_value = 1;
     }
+
+    $form['#attached']['css'] = drupal_get_path('module', 'smartest') . '/styles/feedback.css';
 
     $form['feedback'] = [
       '#title' => t('Feedback'),
@@ -82,6 +74,7 @@ class SmartestFeedbackForm extends FormBase {
         'smartest_update_permissions_submit'
         ],
     ];
+
     return $form;
   }
 
@@ -92,7 +85,6 @@ class SmartestFeedbackForm extends FormBase {
     else {
       smartest_mail_send($form_state->getValues());
     }
-
   }
-
 }
+
