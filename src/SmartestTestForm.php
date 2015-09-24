@@ -27,15 +27,10 @@ class SmartestTestForm extends FormBase {
     $time = $query_time['criteria'];
     $meassure = $query_time['type'];
 
-    // @FIXME
-    // The Assets API has totally changed. CSS, JavaScript, and libraries are now
-    // attached directly to render arrays using the #attached property.
-    // 
-    // 
-    // @see https://www.drupal.org/node/2169605
-    // @see https://www.drupal.org/node/2408597
-    // drupal_add_css(drupal_get_path('module', 'smartest') . '/smartest.css');
+    // Add CSS to form.
+    $form['settings']['#attached']['css'] = drupal_get_path('module', 'smartest') . '/smartest.css';
 
+    //@todo: Remove HTML from #titles.
     $form['settings'] = [
       '#type' => 'fieldset',
       '#title' => t('<h-titles>Test Case Prioritization</h-titles>'),
