@@ -20,16 +20,7 @@ class SmartestResultForm extends FormBase {
       return $form;
     }
 
-    // Load all classes and include CSS.
-    // @FIXME
-    // The Assets API has totally changed. CSS, JavaScript, and libraries are now
-    // attached directly to render arrays using the #attached property.
-    // 
-    // 
-    // @see https://www.drupal.org/node/2169605
-    // @see https://www.drupal.org/node/2408597
-    // drupal_add_css(drupal_get_path('module', 'simpletest') . '/simpletest.css');
-
+    $form['#attached']['css'] = drupal_get_path('module', 'simpletest') . '/simpletest.css';
 
     // Keep track of which test cases passed or failed.
     $filter = [
@@ -121,10 +112,8 @@ class SmartestResultForm extends FormBase {
     // Overal summary status.
     $form['result']['summary']['#ok'] = $form['result']['summary']['#fail'] + $form['result']['summary']['#exception'] == 0;
 
-    // Actions.
-    // @FIXME
-    // url() expects a route name or an external URI.
-    // $form['#action'] = url('admin/config/development/testing-labs/results/re-run');
+    // Set action to re-run
+    $form['#action'] = \Drupal::url('smartest.result_form', array('test_id' => 're-run'));
 
     $form['action'] = [
       '#type' => 'fieldset',
