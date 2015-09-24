@@ -21,15 +21,6 @@ class SmartestGitForm extends FormBase {
   }
 
   public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
-    // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_css(drupal_get_path('module', 'smartest') . '/styles/git-menu.css');
-
 
     $query_client = db_select('smartest_cache')
       ->fields('smartest_cache', ['criteria'])
@@ -41,6 +32,8 @@ class SmartestGitForm extends FormBase {
       ->condition('cookie', 'secret_id', '=')
       ->execute()
       ->fetchAssoc();
+
+    $form['#attached']['css'] = drupal_get_path('module', 'smartest') . '/styles/git-menu.css';
 
     $form['git-description'] = [
       '#type' => 'fieldset',
@@ -80,19 +73,17 @@ class SmartestGitForm extends FormBase {
       '#title' => t('Cron configuration'),
       '#description' => t('The cron will be run according to the period of time chosen, mining the repository with the Git commits.'),
     ];
-    // @FIXME
-    // // @FIXME
-    // // This looks like another module's variable. You'll need to rewrite this call
-    // // to ensure that it uses the correct configuration object.
-    // $form['configuration']['cron_interval'] = array(
-    //     '#type' => 'select',
-    //     '#default_value' => variable_get('cron_example_interval', 60 * 60 * 24),
-    //     '#options' => array(
-    //       3600 * 12 => t('12 hour'),
-    //       60 * 60 * 24 => t('1 day'),
-    //       60 * 60 * 24 * 7 => t('1 week'),
-    //     ),
-    //   );
+
+    //@todo: discuss the options for that value. Not really sure about the original idea.
+     $form['configuration']['cron_interval'] = array(
+         '#type' => 'select',
+         '#default_value' => \Drupal::config('smartest.cron')->get('autorun'),
+         '#options' => array(
+           3600 * 12 => t('12 hour'),
+           60 * 60 * 24 => t('1 day'),
+           60 * 60 * 24 * 7 => t('1 week'),
+         ),
+       );
 
     $form['submits'] = [];
     $form['submits']['save'] = [
@@ -106,7 +97,7 @@ class SmartestGitForm extends FormBase {
         'mining_repository'
         ],
     ];
+
     return $form;
   }
-
 }
