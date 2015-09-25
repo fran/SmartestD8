@@ -4,16 +4,6 @@
  */
 
 function smartest_git_form($form) {
-  // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_css(drupal_get_path('module', 'smartest') . '/styles/git-menu.css');
-
-
   $query_client = db_select('smartest_cache')
       ->fields('smartest_cache', array('criteria'))
       ->condition('cookie', 'client_id', '=')
@@ -25,6 +15,7 @@ function smartest_git_form($form) {
       ->execute()
       ->fetchAssoc();
 
+  $form['#attached']['css'] = drupal_get_path('module', 'smartest') . '/styles/git-menu.css';
   $form['git-description'] = array(
     '#type' => 'fieldset',
     '#description' => t('Please, fill out this form with the Github information of Drupal modules. This will enable the extraction of commits information. This proccess can take about one hour.'),
@@ -81,6 +72,7 @@ function smartest_git_form($form) {
     '#value' => t('Run cron now'),
     '#submit' => array('mining_repository'),
   );
+
   return $form;
 }
 
@@ -101,15 +93,7 @@ function _validate_id($element, &$form_state, $form) {
 }
 
 function smartest_help_git_form($form, &$form_state) {
-  // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_css(drupal_get_path('module', 'smartest') . '/styles/git-menu.css');
-
+  $form['#attached']['css'] = drupal_get_path('module', 'smartest') . '/styles/git-menu.css';
   $form['help'] = array(
     '#type' => 'fieldset',
     '#title' => t('IDs example'),
@@ -121,5 +105,6 @@ function smartest_help_git_form($form, &$form_state) {
     '#description' => t(''),
     '#src' => drupal_get_path('module', 'smartest') . '/imgs/id-example.PNG',
   );
+
   return $form;
 }
