@@ -79,7 +79,6 @@ class SmartestSettingsForm extends ConfigFormBase {
          '#default_value' => \Drupal::config('smartest.settings')->get('simpletest_httpauth_method'),
        );
 
-
      $username = \Drupal::config('smartest.settings')->get('simpletest_httpauth_username');
      $password = \Drupal::config('smartest.settings')->get('simpletest_httpauth_password');
 
