@@ -571,7 +571,7 @@ function calculate_stats() {
     $fields = array(
       'module' => $module,
       'loc' => $results['ncloc'],
-      'cc' => $results['methodCcnMax'],
+      'cc' => (is_null($results['methodCcnMax'])) ? 0 : $results['methodCcnMax'],
       'cloc' => $results['cloc'],
       'lloc' => $results['lloc'],
      );
