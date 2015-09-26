@@ -9,24 +9,24 @@ use \Drupal\smartest\Analyser;
 // TODO we remove the libraries dependency including directly the phploc library and adding it to the source.
 // This is a bad practice and should be fixed later.
 // Composer maybe?
-/*function smartest_requirements($phase) {*/
-  /*global $base_url;*/
-  /*$requirements = array();*/
-  /*$t = 't';*/
+/*function smartest_requirements($phase) {
+  global $base_url;
+  $requirements = array();
+  $t = 't';
 
-  /*$phploc = isset(libraries_get_libraries()['phploc']);*/
-  /*$requirements['phploc'] = array(*/
-    /*'title' => $t('phploc'),*/
-    /*'value' => $phploc ? $t('Installed') : $t('Missing'),*/
-    /*'severity' => $phploc ? REQUIREMENT_OK : REQUIREMENT_ERROR,*/
-  /*);*/
+  $phploc = isset(libraries_get_libraries()['phploc']);
+  $requirements['phploc'] = array(
+    'title' => $t('phploc'),
+    'value' => $phploc ? $t('Installed') : $t('Missing'),
+    'severity' => $phploc ? REQUIREMENT_OK : REQUIREMENT_ERROR,
+  );
 
-  /*if (!$phploc) {*/
-    /*$requirements['phploc']['description'] = t('Please install the Analyser class of phploc library %url.', array('%url' => 'https://github.com/isa-group/phploc/blob/master/src/Analyser.php'));*/
-  /*}*/
+  if (!$phploc) {
+    $requirements['phploc']['description'] = t('Please install the Analyser class of phploc library %url.', array('%url' => 'https://github.com/isa-group/phploc/blob/master/src/Analyser.php'));
+  }
 
-  /*return $requirements;*/
-/*}*/
+  return $requirements;
+}*/
 
 /**
  * Implements hook_schema().
