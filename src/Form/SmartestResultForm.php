@@ -19,7 +19,7 @@ class SmartestResultForm extends FormBase {
     return 'smartest_result_form';
   }
 
-  public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state, $test_id = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $test_id = NULL) {
     smartest_clean_database();
     // Make sure there are test results to display and a re-run is not being performed.
     $results = [];

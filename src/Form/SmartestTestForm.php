@@ -19,7 +19,7 @@ class SmartestTestForm extends FormBase {
     return 'smartest_test_form';
   }
 
-  public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     $query_prior = db_select('smartest_prioritization')
       ->condition('id', 'prioritization_test', '=')
       ->fields('smartest_prioritization', ['last_variable', 'last_order'])
@@ -149,7 +149,7 @@ class SmartestTestForm extends FormBase {
     return $form;
   }
 
-  public function submitForm(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     smartest_clean_database();
     simpletest_classloader_register();
     // Get list of tests.
