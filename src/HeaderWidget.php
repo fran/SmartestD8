@@ -1,7 +1,9 @@
 <?php
+
 namespace Drupal\smartest;
 
 class HeaderWidget {
+
   public $title;
   public $failed_percent;
   public $success_percent;
@@ -16,6 +18,7 @@ class HeaderWidget {
   public $n_fails_modules = array();
   public $lessCoverage = array();
   public $lessCoverageModule = array();
+
   function HeaderWidget($h_title) {
     $this->title = $h_title;
     $total_fails = 0;

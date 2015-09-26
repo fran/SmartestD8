@@ -1,4 +1,5 @@
 <?php
+
 namespace Drupal\smartest;
 
 class SmartestFeedbackForm extends FormBase {

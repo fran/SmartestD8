@@ -1,15 +1,17 @@
 <?php
+
 namespace Drupal\smartest;
 
 class GraphicalWidget {
+
   public $modules = array();
   public $title;
   public $type;
   public $criteria;
   public $n_element;
   public $form;
-
   public $chart;
+
   function GraphicalWidget($g_title, $g_modules = array(), $g_type = 'column', $g_criteria = 'loc', $g_n_element = 5) {
     $this->title = $g_title;
     $this->modules = $g_modules;

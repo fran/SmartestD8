@@ -1,12 +1,14 @@
 <?php
+
 namespace Drupal\smartest;
 
 class Prioritization {
-  /*
-  *$modules: List of classes to be tested
-  *$variable: String with  the variable to be meassured
-  *$order: Order string, 'ASC' or 'DESC'
-  */
+
+  /**
+   * $modules: List of classes to be tested
+   * $variable: String with  the variable to be meassured
+   * $order: Order string, 'ASC' or 'DESC'
+   */
   function get_statistics_prioritization($modules, $variable, $order) {
     $result = array();
 
@@ -30,9 +32,10 @@ class Prioritization {
 
     return $result;
   }
-  /*
-  *$class_name: test class name
-  */
+
+  /**
+   * $class_name: test class name
+   */
   function find_module_name_by_test_class($class_name) {
     $class = new $class_name;
     $module_name = strtolower($class->getInfo()['group']);

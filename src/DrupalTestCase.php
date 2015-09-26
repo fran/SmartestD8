@@ -1,4 +1,5 @@
 <?php
+
 namespace Drupal\smartest;
 
 /**
@@ -7,6 +8,7 @@ namespace Drupal\smartest;
  * Do not extend this class, use one of the subclasses in this file.
  */
 abstract class DrupalTestCase {
+
   /**
    * The test run ID.
    *
