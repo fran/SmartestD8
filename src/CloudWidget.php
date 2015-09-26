@@ -69,8 +69,8 @@ class CloudWidget {
     $row2 = $coloraux->fetchAssoc();
     $description = identify_criteria($this->size_criteria) . ': ' . $row1[$this->size_criteria] . ' - ' .
     identify_criteria($this->color_criteria) . ': ' . $row2[$this->color_criteria];
-    $result = $result . ' ' . $this->get_display_term($row1['module'], $this->get_word_index($this->max_size, $this->min_size, $row1[$this->size_criteria]),
-    $this->get_word_index($this->max_color, $this->min_color, $row2[$this->color_criteria]), $description);
+    $result = $result . ' ' . $this->get_display_term($row1['module'], $this->get_word_index($this->max_size, $row1[$this->size_criteria]),
+    $this->get_word_index($this->max_color, $row2[$this->color_criteria]), $description);
   }
 
     $this->form[$this->title]['#description'] = '<div class="cloud-container"><div class="letter">' . $result . '</div></div>';
@@ -82,38 +82,18 @@ class CloudWidget {
     return $result;
   }
 
-  function get_word_index($max, $min, $value) {
-    $range = $max;
+  function get_word_index($range, $value) {
     $result = 1;
-    if ($value >= 0 && $value < $range*0.1) {
-      $result = 1;
-    }
-    if ($value >= $range*0.1 && $value < $range*0.2) {
-      $result = 2;
-    }
-    if ($value >= $range*0.2 && $value < $range*0.3) {
-      $result = 3;
-    }
-    if ($value >= $range*0.3 && $value < $range*0.4) {
-      $result = 4;
-    }
-    if ($value >= $range*0.4 && $value < $range*0.5) {
-      $result = 5;
-    }
-    if ($value >= $range*0.5 && $value < $range*0.6) {
-      $result = 6;
-    }
-    if ($value >= $range*0.6 && $value < $range*0.7) {
-      $result = 7;
-    }
-    if ($value >= $range*0.7 && $value < $range*0.8) {
-      $result = 8;
-    }
-    if ($value >= $range*0.8 && $value < $range*0.9) {
-      $result = 9;
-    }
-    if ($value >= $range*0.9 && $value <= $range*1) {
-      $result = 10;
+    $range_increment = 0.1;
+
+    for ($i = 0; $i < 10; $i++) {
+      $starting_range = $i * $range * $range_increment;
+      $ending_range = $value < $range * $range_increment * ($i + 1);
+
+      if ($value >= $starting_range && $ending_range) {
+        $result = $i + 1;
+        break;
+      }
     }
     return $result;
   }
