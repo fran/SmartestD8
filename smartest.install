@@ -1,8 +1,15 @@
 <?php
+
 /**
  * @file
  */
-function smartest_requirements($phase) {
+
+use \Drupal\smartest\Analyser;
+
+// TODO we remove the libraries dependency including directly the phploc library and adding it to the source.
+// This is a bad practice and should be fixed later.
+// Composer maybe?
+/*function smartest_requirements($phase) {
   global $base_url;
   $requirements = array();
   $t = 't';
@@ -19,7 +26,8 @@ function smartest_requirements($phase) {
   }
 
   return $requirements;
-}
+}*/
+
 /**
  * Implements hook_schema().
  */
@@ -30,7 +38,7 @@ function smartest_schema() {
     'fields' => array(
       'module'  => array(
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 50,
         'not null' => TRUE,
         'default' => '',
         'description' => 'Primary Key: Module name.',
@@ -135,7 +143,7 @@ function smartest_schema() {
     'fields' => array(
       'cookie'  => array(
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 50,
         'not null' => TRUE,
         'default' => 'statistic_form_cookie',
         'description' => 'Primary Key: Identifier.',
@@ -544,9 +552,9 @@ function smartest_install() {
 
 function calculate_stats() {
   drupal_set_time_limit( 60 * 5000 );
-  libraries_load('phploc');
 
-  $modules = module_list();
+  $moduleHandler = \Drupal::moduleHandler();
+  $modules = $moduleHandler->getModuleList();
   $files = array();
 
   foreach ($modules as $module => $value) {
@@ -561,9 +569,9 @@ function calculate_stats() {
     $results = $analyser->countFiles($files_root, FALSE);
 
     $fields = array(
-      'module'    => $module,
+      'module' => $module,
       'loc' => $results['ncloc'],
-      'cc' => $results['methodCcnMax'],
+      'cc' => (is_null($results['methodCcnMax'])) ? 0 : $results['methodCcnMax'],
       'cloc' => $results['cloc'],
       'lloc' => $results['lloc'],
      );

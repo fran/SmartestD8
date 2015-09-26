@@ -9,7 +9,6 @@ namespace Drupal\smartest\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element;
 
 class SmartestResultForm extends FormBase {
 
@@ -20,7 +19,7 @@ class SmartestResultForm extends FormBase {
     return 'smartest_result_form';
   }
 
-  public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state, $test_id = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $test_id = NULL) {
     smartest_clean_database();
     // Make sure there are test results to display and a re-run is not being performed.
     $results = [];
@@ -34,8 +33,8 @@ class SmartestResultForm extends FormBase {
     // @FIXME
     // The Assets API has totally changed. CSS, JavaScript, and libraries are now
     // attached directly to render arrays using the #attached property.
-    // 
-    // 
+    //
+    //
     // @see https://www.drupal.org/node/2169605
     // @see https://www.drupal.org/node/2408597
     // drupal_add_css(drupal_get_path('module', 'simpletest') . '/simpletest.css');
@@ -188,6 +187,10 @@ class SmartestResultForm extends FormBase {
     }
 
     return $form;
+  }
+
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+
   }
 
 }

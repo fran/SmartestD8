@@ -9,7 +9,6 @@ namespace Drupal\smartest\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element;
 
 class SmartestSettingsForm extends ConfigFormBase {
 
@@ -45,16 +44,15 @@ class SmartestSettingsForm extends ConfigFormBase {
     return ['smartest.settings'];
   }
 
-  public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
 
     $form['general'] = [
       '#type' => 'fieldset',
       '#title' => t('General'),
     ];
     // @FIXME
-    // // @FIXME
-    // // This looks like another module's variable. You'll need to rewrite this call
-    // // to ensure that it uses the correct configuration object.
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
     // $form['general']['simpletest_clear_results'] = array(
     //     '#type' => 'checkbox',
     //     '#title' => t('Clear results after each complete test suite run'),
@@ -63,9 +61,8 @@ class SmartestSettingsForm extends ConfigFormBase {
     //   );
 
     // @FIXME
-    // // @FIXME
-    // // This looks like another module's variable. You'll need to rewrite this call
-    // // to ensure that it uses the correct configuration object.
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
     // $form['general']['simpletest_verbose'] = array(
     //     '#type' => 'checkbox',
     //     '#title' => t('Provide verbose information when running tests'),
@@ -82,9 +79,8 @@ class SmartestSettingsForm extends ConfigFormBase {
       '#collapsed' => TRUE,
     ];
     // @FIXME
-    // // @FIXME
-    // // This looks like another module's variable. You'll need to rewrite this call
-    // // to ensure that it uses the correct configuration object.
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
     // $form['httpauth']['simpletest_httpauth_method'] = array(
     //     '#type' => 'select',
     //     '#title' => t('Method'),
@@ -100,15 +96,13 @@ class SmartestSettingsForm extends ConfigFormBase {
     //   );
 
     // @FIXME
-    // // @FIXME
-    // // This looks like another module's variable. You'll need to rewrite this call
-    // // to ensure that it uses the correct configuration object.
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
     // $username = variable_get('simpletest_httpauth_username');
 
     // @FIXME
-    // // @FIXME
-    // // This looks like another module's variable. You'll need to rewrite this call
-    // // to ensure that it uses the correct configuration object.
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
     // $password = variable_get('simpletest_httpauth_password');
 
     $form['httpauth']['simpletest_httpauth_username'] = [

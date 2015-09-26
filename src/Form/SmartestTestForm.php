@@ -9,7 +9,6 @@ namespace Drupal\smartest\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element;
 
 class SmartestTestForm extends FormBase {
 
@@ -20,7 +19,7 @@ class SmartestTestForm extends FormBase {
     return 'smartest_test_form';
   }
 
-  public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     $query_prior = db_select('smartest_prioritization')
       ->condition('id', 'prioritization_test', '=')
       ->fields('smartest_prioritization', ['last_variable', 'last_order'])
@@ -40,8 +39,8 @@ class SmartestTestForm extends FormBase {
     // @FIXME
     // The Assets API has totally changed. CSS, JavaScript, and libraries are now
     // attached directly to render arrays using the #attached property.
-    // 
-    // 
+    //
+    //
     // @see https://www.drupal.org/node/2169605
     // @see https://www.drupal.org/node/2408597
     // drupal_add_css(drupal_get_path('module', 'smartest') . '/smartest.css');
@@ -150,7 +149,7 @@ class SmartestTestForm extends FormBase {
     return $form;
   }
 
-  public function submitForm(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     smartest_clean_database();
     simpletest_classloader_register();
     // Get list of tests.
@@ -173,8 +172,8 @@ class SmartestTestForm extends FormBase {
       }
     }
     $query = db_query('SELECT l.last_variable, l.last_order, l.id
-                    AS items 
-                    FROM {smartest_prioritization} l  
+                    AS items
+                    FROM {smartest_prioritization} l
                     ORDER BY l.id');
 
     $order = 'DESC';

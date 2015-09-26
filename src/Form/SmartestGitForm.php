@@ -9,7 +9,6 @@ namespace Drupal\smartest\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element;
 
 class SmartestGitForm extends FormBase {
 
@@ -20,7 +19,7 @@ class SmartestGitForm extends FormBase {
     return 'smartest_git_form';
   }
 
-  public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
 
     $query_client = db_select('smartest_cache')
       ->fields('smartest_cache', ['criteria'])
@@ -99,5 +98,9 @@ class SmartestGitForm extends FormBase {
     ];
 
     return $form;
+  }
+
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+
   }
 }
