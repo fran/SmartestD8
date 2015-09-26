@@ -9,7 +9,6 @@ namespace Drupal\smartest\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element;
 
 class SmartestFeedbackForm extends FormBase {
 
@@ -20,7 +19,7 @@ class SmartestFeedbackForm extends FormBase {
     return 'smartest_feedback_form';
   }
 
-  public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     $query_permission = db_select('smartest_cache')
       ->fields('smartest_cache', ['type'])
       ->condition('cookie', 'permission_cookie', '=')
@@ -78,7 +77,7 @@ class SmartestFeedbackForm extends FormBase {
     return $form;
   }
 
-  public function submitForm(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     if ($form_state->getValue(['name']) == "" || $form_state->getValue(['organization']) == "") {
       drupal_set_message(t('Fields "name" and "organization" are required.'), 'error');
     }

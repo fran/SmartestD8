@@ -20,7 +20,7 @@ class SmartestDashboardForm extends FormBase {
     return 'smartest_dashboard_form';
   }
 
-  public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     $form['#attached']['js'] = [
       drupal_get_path('module', 'smartest') . '/smartest.js'
       ];
@@ -280,5 +280,9 @@ class SmartestDashboardForm extends FormBase {
     }
 
     return $form;
+  }
+
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+
   }
 }
