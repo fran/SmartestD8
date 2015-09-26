@@ -1,10 +1,12 @@
 <?php
+
 namespace Drupal\smartest;
 
 /**
  * Test case for typical Drupal tests.
  */
 class DrupalWebTestCase extends DrupalTestCase {
+
   /**
    * The profile to install as a basis for testing.
    *

@@ -1,4 +1,5 @@
 <?php
+
 namespace Drupal\smartest;
 
 class SmartestGitForm extends FormBase {
