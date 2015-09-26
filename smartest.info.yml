@@ -1,13 +1,10 @@
 name: SmarTest
-description: 'SmarTest improves the testing process in Drupal. Order and run tests of enabled modules accelerating de detection of faults in Drupal.'
-package: 'Drupal 7 Development'
-version: 7.x-1
+description: 'SmarTest improves the testing process in Drupal. Order and run tests of enabled modules accelerating the detection of faults in Drupal.'
+package: 'Testing'
+version: 8.x-1.x
 core: 8.x
+
 dependencies:
   - simpletest
-  - charts
-  - charts_google
-  - libraries
-  - code_coverage
 datestamp: '1416429488'
 type: module
