@@ -12,13 +12,12 @@ class SmartestDashboardForm extends FormBase {
 
   public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
     // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_css(drupal_get_path('module', 'smartest') . '/styles/graph-menu.css');
+    // The Assets API has totally changed. CSS, JavaScript, and libraries are now
+    // attached directly to render arrays using the #attached property.
+    //
+    // @see https://www.drupal.org/node/2169605
+    // @see https://www.drupal.org/node/2408597
+    // drupal_add_css(drupal_get_path('module', 'smartest') . '/styles/graph-menu.css');
 
     $form['#attached']['js'] = [
       drupal_get_path('module', 'smartest') . '/smartest.js'

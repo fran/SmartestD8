@@ -28,16 +28,14 @@ class DrupalUnitTestCase extends DrupalTestCase {
    */
   protected function setUp() {
     code_coverage_stop(FALSE);
-    //module_invoke("code_coverage", "code_coverage_stop");
 
     global $conf;
 
     // Store necessary current values before switching to the test environment.
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $this->originalFileDirectory = variable_get('file_public_path', conf_path() . '/files');
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $this->originalFileDirectory = variable_get('file_public_path', conf_path() . '/files');
 
 
     // Reset all statics so that test is performed with a clean environment.
@@ -78,12 +76,10 @@ class DrupalUnitTestCase extends DrupalTestCase {
     }
     $this->setup = TRUE;
     code_coverage_start();
-    //module_invoke("code_coverage", "code_coverage_start");
   }
 
   protected function tearDown() {
     code_coverage_stop(FALSE);
-    //module_invoke("code_coverage", "code_coverage_stop");
 
     global $conf;
 

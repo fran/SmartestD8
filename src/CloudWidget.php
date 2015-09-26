@@ -13,14 +13,14 @@ class CloudWidget {
   public $max_size;
   public $min_size;
 
-  function CloudWidget($c_title, $c_size_criteria, 
+  function CloudWidget($c_title, $c_size_criteria,
     $c_color_criteria, $c_modules) {
 
     $this->size_criteria = $c_size_criteria;
     $this->color_criteria = $c_color_criteria;
     $this->title = $c_title;
     $this->modules = $c_modules;
-    $id = $this->title; 
+    $id = $this->title;
     $this->form[$id] =  array(
       '#type' => 'fieldset',
       '#title' => t('<h-titles>Size: ' . identify_criteria($this->size_criteria) . ' - Color: ' . identify_criteria($this->color_criteria) . '</h-titles>'),
@@ -58,7 +58,7 @@ class CloudWidget {
     $sizeaux = $size_query->execute();
     $color_query = db_select('smartest_statistic')
       ->fields('smartest_statistic', array('module', $this->color_criteria));
-  
+
     if (!in_array('ALL', $this->modules)) {
       $color_query->condition('module', $this->modules, 'IN');
     }
@@ -69,7 +69,7 @@ class CloudWidget {
     $row2 = $coloraux->fetchAssoc();
     $description = identify_criteria($this->size_criteria) . ': ' . $row1[$this->size_criteria] . ' - ' .
     identify_criteria($this->color_criteria) . ': ' . $row2[$this->color_criteria];
-    $result = $result . ' ' . $this->get_display_term($row1['module'], $this->get_word_index($this->max_size, $this->min_size, $row1[$this->size_criteria]), 
+    $result = $result . ' ' . $this->get_display_term($row1['module'], $this->get_word_index($this->max_size, $this->min_size, $row1[$this->size_criteria]),
     $this->get_word_index($this->max_color, $this->min_color, $row2[$this->color_criteria]), $description);
   }
 
@@ -79,7 +79,7 @@ class CloudWidget {
 
   function get_display_term($name, $size_index, $color_index, $description) {
     $result = "<span class='tagclouds-term level" . $size_index . " lvlc" . $color_index . "' title='" . $description . "'>" . $name . "</span>\n";
-    return $result; 
+    return $result;
   }
 
   function get_word_index($max, $min, $value) {

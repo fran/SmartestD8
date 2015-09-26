@@ -56,7 +56,6 @@ class SmartestSettingsForm extends ConfigFormBase {
        '#default_value' => \Drupal::config('smartet.tests')->get('simpletest_verbose'),
      );
 
-
     $form['httpauth'] = [
       '#type' => 'fieldset',
       '#title' => t('HTTP authentication'),

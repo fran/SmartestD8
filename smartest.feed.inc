@@ -3,7 +3,15 @@
  *@file
  */
 function smartest_feedback_form($form) {
-  
+  // @FIXME
+  // The Assets API has totally changed. CSS, JavaScript, and libraries are now
+  // attached directly to render arrays using the #attached property.
+  //
+  //
+  // @see https://www.drupal.org/node/2169605
+  // @see https://www.drupal.org/node/2408597
+  // drupal_add_css(drupal_get_path('module', 'smartest') . '/styles/feedback.css');
+
   $query_permission = db_select('smartest_cache')
     ->fields('smartest_cache', array('type'))
     ->condition('cookie', 'permission_cookie', '=')
@@ -82,7 +90,7 @@ function smartest_feedback_form_submit($form, &$form_state) {
   else {
     smartest_mail_send($form_state['values']);
   }
-    
+
 }
 
 function smartest_mail($key, &$message, $params) {
@@ -113,6 +121,10 @@ function smartest_mail_send($form_values) {
   $key = 'feedback';
   // @todo: This need to be fixed. Cannot be hardcode.
   $to = 'smartest.drupal@gmail.com';
+  // @FIXME
+  // This looks like another module's variable. You'll need to rewrite this call
+  // to ensure that it uses the correct configuration object.
+  // $from = variable_get('site_mail', 'feedback@smartest.com');
 
   $params = $form_values;
   $language = language_default();

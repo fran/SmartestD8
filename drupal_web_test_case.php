@@ -462,9 +462,8 @@ abstract class DrupalTestCase {
       $class_safe = str_replace('\\', '_', get_class($this));
       $url = file_create_url($this->originalFileDirectory . '/simpletest/verbose/' . $class_safe . '-' . $id . '.html');
       // @FIXME
-// l() expects a Url object, created from a route name or external URI.
-// $this->error(l(t('Verbose message'), $url, array('attributes' => array('target' => '_blank'))), 'User notice');
-
+      // l() expects a Url object, created from a route name or external URI.
+      // $this->error(l(t('Verbose message'), $url, array('attributes' => array('target' => '_blank'))), 'User notice');
     }
   }
 
@@ -485,31 +484,27 @@ abstract class DrupalTestCase {
     // Initialize verbose debugging.
     $class = get_class($this);
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// simpletest_verbose(NULL, variable_get('file_public_path', conf_path() . '/files'), str_replace('\\', '_', $class));
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // simpletest_verbose(NULL, variable_get('file_public_path', conf_path() . '/files'), str_replace('\\', '_', $class));
 
 
     // HTTP auth settings (<username>:<password>) for the simpletest browser
     // when sending requests to the test site.
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $this->httpauth_method = variable_get('simpletest_httpauth_method', CURLAUTH_BASIC);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $this->httpauth_method = variable_get('simpletest_httpauth_method', CURLAUTH_BASIC);
 
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $username = variable_get('simpletest_httpauth_username', NULL);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $username = variable_get('simpletest_httpauth_username', NULL);
 
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $password = variable_get('simpletest_httpauth_password', NULL);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $password = variable_get('simpletest_httpauth_password', NULL);
 
     if ($username && $password) {
       $this->httpauth_credentials = $username . ':' . $password;
@@ -542,7 +537,6 @@ abstract class DrupalTestCase {
           'caller' => $caller,
         );
         code_coverage_start();
-        //module_invoke("code_coverage", "code_coverage_start");
 
         $completion_check_id = DrupalTestCase::insertAssert($this->testId, $class, FALSE, t('The test did not complete due to a fatal error.'), 'Completion check', $caller);
         $this->setUp();
@@ -564,7 +558,6 @@ abstract class DrupalTestCase {
 
         unset($GLOBALS['drupal_test_info']);
         code_coverage_stop(FALSE);
-        //module_invoke("code_coverage", "code_coverage_stop");
 
       }
     }
@@ -572,10 +565,7 @@ abstract class DrupalTestCase {
     drupal_get_messages();
     restore_error_handler();
 
-    
     code_coverage_record($this->testId);
-    //module_invoke("code_coverage", "code_coverage_record");
-
   }
 
   /**
@@ -770,10 +760,9 @@ class DrupalUnitTestCase extends DrupalTestCase {
 
     // Store necessary current values before switching to the test environment.
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $this->originalFileDirectory = variable_get('file_public_path', conf_path() . '/files');
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $this->originalFileDirectory = variable_get('file_public_path', conf_path() . '/files');
 
 
     // Reset all statics so that test is performed with a clean environment.
@@ -814,12 +803,10 @@ class DrupalUnitTestCase extends DrupalTestCase {
     }
     $this->setup = TRUE;
     code_coverage_start();
-    //module_invoke("code_coverage", "code_coverage_start");
   }
 
   protected function tearDown() {
     code_coverage_stop(FALSE);
-    //module_invoke("code_coverage", "code_coverage_stop");
 
     global $conf;
 
@@ -981,9 +968,10 @@ class DrupalWebTestCase extends DrupalTestCase {
    *   A node object matching $title.
    */
   function drupalGetNodeByTitle($title, $reset = FALSE) {
-    $nodes = // @FIXME
-// To reset the node cache, use EntityStorageInterface::resetCache().
-\Drupal::entityManager()->getStorage('node')->loadByProperties(array('title' => $title));
+    // @FIXME
+    // To reset the node cache, use EntityStorageInterface::resetCache().
+    $nodes = \Drupal::entityManager()->getStorage('node')->loadByProperties(array('title' => $title));
+
     // Load the first node returned from the database.
     $returned_node = reset($nodes);
     return $returned_node;
@@ -1134,10 +1122,9 @@ class DrupalWebTestCase extends DrupalTestCase {
       $files = file_scan_directory($original, '/(html|image|javascript|php|sql)-.*/');
       foreach ($files as $file) {
         // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// file_unmanaged_copy($file->uri, variable_get('file_public_path', conf_path() . '/files'));
+        // This looks like another module's variable. You'll need to rewrite this call
+        // to ensure that it uses the correct configuration object.
+        // file_unmanaged_copy($file->uri, variable_get('file_public_path', conf_path() . '/files'));
 
       }
 
@@ -1210,8 +1197,8 @@ class DrupalWebTestCase extends DrupalTestCase {
     }
 
     // @FIXME
-// user_save() is now a method of the user entity.
-// $account = user_save(drupal_anonymous_user(), $edit);
+    // user_save() is now a method of the user entity.
+    // $account = user_save(drupal_anonymous_user(), $edit);
 
 
     $this->assertTrue(!empty($account->uid), t('User created with name %name and pass %pass', array('%name' => $edit['name'], '%pass' => $edit['pass'])), t('User login'));
@@ -1436,23 +1423,20 @@ class DrupalWebTestCase extends DrupalTestCase {
     // Store necessary current values before switching to prefixed database.
     $this->originalLanguage = $language;
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $this->originalLanguageDefault = variable_get('language_default');
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $this->originalLanguageDefault = variable_get('language_default');
 
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $this->originalFileDirectory = variable_get('file_public_path', conf_path() . '/files');
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $this->originalFileDirectory = variable_get('file_public_path', conf_path() . '/files');
 
     $this->originalProfile = drupal_get_profile();
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $this->originalCleanUrl = variable_get('clean_url', 0);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $this->originalCleanUrl = variable_get('clean_url', 0);
 
     $this->originalUser = $user;
 
@@ -1518,7 +1502,6 @@ class DrupalWebTestCase extends DrupalTestCase {
    */
   protected function setUp() {
     code_coverage_stop(FALSE);
-    //module_invoke("code_coverage", "code_coverage_stop");
 
     global $user, $language, $conf;
 
@@ -1559,22 +1542,19 @@ class DrupalWebTestCase extends DrupalTestCase {
 
     // Set path variables.
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// variable_set('file_public_path', $this->public_files_directory);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // variable_set('file_public_path', $this->public_files_directory);
 
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// variable_set('file_private_path', $this->private_files_directory);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // variable_set('file_private_path', $this->private_files_directory);
 
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// variable_set('file_temporary_path', $this->temp_files_directory);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // variable_set('file_temporary_path', $this->temp_files_directory);
 
 
     // Set the 'simpletest_parent_profile' variable to add the parent profile's
@@ -1582,18 +1562,16 @@ class DrupalWebTestCase extends DrupalTestCase {
     // @see drupal_system_listing()
     // @todo This may need to be primed like 'install_profile' above.
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// variable_set('simpletest_parent_profile', $this->originalProfile);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // variable_set('simpletest_parent_profile', $this->originalProfile);
 
 
     // Include the testing profile.
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// variable_set('install_profile', $this->profile);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // variable_set('install_profile', $this->profile);
 
     $profile_details = install_profile_info($this->profile, 'en');
 
@@ -1636,28 +1614,24 @@ class DrupalWebTestCase extends DrupalTestCase {
 
     // Restore necessary variables.
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// variable_set('install_task', 'done');
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // variable_set('install_task', 'done');
 
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// variable_set('clean_url', $this->originalCleanUrl);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // variable_set('clean_url', $this->originalCleanUrl);
 
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// variable_set('site_mail', 'simpletest@example.com');
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // variable_set('site_mail', 'simpletest@example.com');
 
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// variable_set('date_default_timezone', date_default_timezone_get());
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // variable_set('date_default_timezone', date_default_timezone_get());
 
 
     // Set up English language.
@@ -1666,16 +1640,14 @@ class DrupalWebTestCase extends DrupalTestCase {
 
     // Use the test mail class instead of the default mail handler class.
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// variable_set('mail_system', array('default-system' => 'TestingMailSystem'));
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // variable_set('mail_system', array('default-system' => 'TestingMailSystem'));
 
 
     drupal_set_time_limit($this->timeLimit);
     $this->setup = TRUE;
     code_coverage_start();
-    //module_invoke("code_coverage", "code_coverage_start");
   }
 
   /**
@@ -1764,7 +1736,6 @@ class DrupalWebTestCase extends DrupalTestCase {
    */
   protected function tearDown() {
     code_coverage_stop(FALSE);
-    //module_invoke("code_coverage", "code_coverage_stop");
 
     global $user, $language;
 
@@ -1773,10 +1744,9 @@ class DrupalWebTestCase extends DrupalTestCase {
     simpletest_log_read($this->testId, $this->databasePrefix, get_class($this), TRUE);
 
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $emailCount = count(variable_get('drupal_test_email_collector', array()));
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $emailCount = count(variable_get('drupal_test_email_collector', array()));
 
     if ($emailCount) {
       $message = \Drupal::translation()->formatPlural($emailCount, '1 e-mail was sent during this test.', '@count e-mails were sent during this test.');
@@ -1955,18 +1925,17 @@ class DrupalWebTestCase extends DrupalTestCase {
     // of the request.
     // TODO: Remove this for Drupal 8, since fixed in curl 7.20.0.
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// if (in_array($status, array(300, 301, 302, 303, 305, 307)) && $this->redirect_count < variable_get('simpletest_maximum_redirects', 5)) {
-//       if ($this->drupalGetHeader('location')) {
-//         $this->redirect_count++;
-//         $curl_options = array();
-//         $curl_options[CURLOPT_URL] = $this->drupalGetHeader('location');
-//         $curl_options[CURLOPT_HTTPGET] = TRUE;
-//         return $this->curlExec($curl_options, TRUE);
-//       }
-//     }
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // if (in_array($status, array(300, 301, 302, 303, 305, 307)) && $this->redirect_count < variable_get('simpletest_maximum_redirects', 5)) {
+    //       if ($this->drupalGetHeader('location')) {
+    //         $this->redirect_count++;
+    //         $curl_options = array();
+    //         $curl_options[CURLOPT_URL] = $this->drupalGetHeader('location');
+    //         $curl_options[CURLOPT_HTTPGET] = TRUE;
+    //         return $this->curlExec($curl_options, TRUE);
+    //       }
+    //     }
 
 
     $this->drupalSetContent($content, isset($original_url) ? $original_url : curl_getinfo($this->curlHandle, CURLINFO_EFFECTIVE_URL));
@@ -2087,8 +2056,8 @@ class DrupalWebTestCase extends DrupalTestCase {
     // options set, it might change the GET into a POST. Make sure we clear out
     // previous options.
     // @FIXME
-// url() expects a route name or an external URI.
-// $out = $this->curlExec(array(CURLOPT_HTTPGET => TRUE, CURLOPT_URL => url($path, $options), CURLOPT_NOBODY => FALSE, CURLOPT_HTTPHEADER => $headers));
+    // url() expects a route name or an external URI.
+    // $out = $this->curlExec(array(CURLOPT_HTTPGET => TRUE, CURLOPT_URL => url($path, $options), CURLOPT_NOBODY => FALSE, CURLOPT_HTTPHEADER => $headers));
 
     $this->refreshVariables(); // Ensure that any changes to variables in the other thread are picked up.
 
@@ -2481,10 +2450,9 @@ class DrupalWebTestCase extends DrupalTestCase {
    */
   protected function cronRun() {
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $this->drupalGet($GLOBALS['base_url'] . '/cron.php', array('external' => TRUE, 'query' => array('cron_key' => variable_get('cron_key', 'drupal'))));
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $this->drupalGet($GLOBALS['base_url'] . '/cron.php', array('external' => TRUE, 'query' => array('cron_key' => variable_get('cron_key', 'drupal'))));
 
   }
 
@@ -2526,8 +2494,8 @@ class DrupalWebTestCase extends DrupalTestCase {
   protected function drupalHead($path, array $options = array(), array $headers = array()) {
     $options['absolute'] = TRUE;
     // @FIXME
-// url() expects a route name or an external URI.
-// $out = $this->curlExec(array(CURLOPT_NOBODY => TRUE, CURLOPT_URL => url($path, $options), CURLOPT_HTTPHEADER => $headers));
+    // url() expects a route name or an external URI.
+    // $out = $this->curlExec(array(CURLOPT_NOBODY => TRUE, CURLOPT_URL => url($path, $options), CURLOPT_HTTPHEADER => $headers));
 
     $this->refreshVariables(); // Ensure that any changes to variables in the other thread are picked up.
     return $out;
@@ -3034,10 +3002,9 @@ class DrupalWebTestCase extends DrupalTestCase {
    */
   protected function drupalGetMails($filter = array()) {
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $captured_emails = variable_get('drupal_test_email_collector', array());
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $captured_emails = variable_get('drupal_test_email_collector', array());
 
     $filtered_emails = array();
 
@@ -3098,16 +3065,16 @@ class DrupalWebTestCase extends DrupalTestCase {
   protected function assertUrl($path, array $options = array(), $message = '', $group = 'Other') {
     if (!$message) {
       // @FIXME
-// url() expects a route name or an external URI.
-// $message = t('Current URL is @url.', array(
-//         '@url' => var_export(url($path, $options), TRUE),
-//       ));
+    // url() expects a route name or an external URI.
+    // $message = t('Current URL is @url.', array(
+    //         '@url' => var_export(url($path, $options), TRUE),
+    //       ));
 
     }
     $options['absolute'] = TRUE;
     // @FIXME
-// url() expects a route name or an external URI.
-// return $this->assertEqual($this->getUrl(), url($path, $options), $message, $group);
+    // url() expects a route name or an external URI.
+    // return $this->assertEqual($this->getUrl(), url($path, $options), $message, $group);
 
   }
 
@@ -3393,14 +3360,13 @@ class DrupalWebTestCase extends DrupalTestCase {
    */
   protected function assertThemeOutput($callback, array $variables = array(), $expected, $message = '', $group = 'Other') {
     // @FIXME
-// theme() has been renamed to _theme() and should NEVER be called directly.
-// Calling _theme() directly can alter the expected output and potentially
-// introduce security issues (see https://www.drupal.org/node/2195739). You
-// should use renderable arrays instead.
-// 
-// 
-// @see https://www.drupal.org/node/2195739
-// $output = theme($callback, $variables);
+    // theme() has been renamed to _theme() and should NEVER be called directly.
+    // Calling _theme() directly can alter the expected output and potentially
+    // introduce security issues (see https://www.drupal.org/node/2195739). You
+    // should use renderable arrays instead.
+    //
+    // @see https://www.drupal.org/node/2195739
+    // $output = theme($callback, $variables);
 
     $this->verbose('Variables:' . '<pre>' .  \Drupal\Component\Utility\SafeMarkup::checkPlain(var_export($variables, TRUE)) . '</pre>'
       . '<hr />' . 'Result:' . '<pre>' .  \Drupal\Component\Utility\SafeMarkup::checkPlain(var_export($output, TRUE)) . '</pre>'
@@ -3815,10 +3781,9 @@ class DrupalWebTestCase extends DrupalTestCase {
    */
   protected function assertMail($name, $value = '', $message = '') {
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $captured_emails = variable_get('drupal_test_email_collector', array());
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $captured_emails = variable_get('drupal_test_email_collector', array());
 
     $email = end($captured_emails);
     return $this->assertTrue($email && isset($email[$name]) && $email[$name] == $value, $message, t('E-mail'));
@@ -3925,10 +3890,9 @@ function simpletest_verbose($message, $original_file_directory = NULL, $test_cla
     $file_directory = $original_file_directory;
     $class = $test_class;
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $verbose = variable_get('simpletest_verbose', TRUE);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $verbose = variable_get('simpletest_verbose', TRUE);
 
     $directory = $file_directory . '/simpletest/verbose';
     $writable = file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
