@@ -1,5 +1,5 @@
 SmarTest
-======
+========
 
 SmarTest is a module for improving the testing process in Drupal. It contains new testing techniques to accelerate the detection of faults, providing faster feedback to the testers and reducing debugging efforts.
 
@@ -8,22 +8,22 @@ SmarTest extends the functionality of SimpleTest core module by integrating nove
 Improvements with respect to SimpleTest
 ---------------------------------------
 
--Customizable Dashboard with run-time extracted data to guide the testing
--Different Test prioritizations to detect faults faster
--Automated testing with feedback in real time
--Time-out option to automatically stop the test execution
+- Customizable Dashboard with run-time extracted data to guide the testing.
+- Different Test prioritizations to detect faults faster.
+- Automated testing with feedback in real time.
+- Time-out option to automatically stop the test execution.
 
 Libraries
 ---------
 See here which libraries are used within the SmarTest module:
--phploc
+- phploc
 
 External dependencies
 ---------------------
--SimpleTest
--Charts with Google Charts
--Libraries
--Code coverage (without modifying the Drupal core)
+- SimpleTest.
+- Charts with Google Charts.
+- Libraries.
+- Code coverage (without modifying the Drupal core).
 
 Installation guide
 ------------------
@@ -34,15 +34,15 @@ Installation guide
 4- Install phploc library:
   - Go to "https://github.com/isa-group/phploc/blob/master/src/Analyser.php".
   - Download the class Analyser.php.
-  - Create a folder as:  
+  - Create a folder as:
       phploc
       |->Analyser.php
   - Locate phploc folder in "Drupal_directory/sites/all/libraries/".
 5- Download Code Coverage module. For its installation you'll need:
-  5.1 Install XDebug or enable XDebug fastly by uncommenting the following line to [xdebug] -> “zend_extension = ….” in php.ini file of your server. 
-    - Restart the server for applying the changes.
-  5.2 Code Coverage makes changes in the Drupal Core. If you do not “touch” the Drupal core, do not apply Code Coverage patch.
-    - You may apply the patch of SmarTest (smarTest.patch) over Code coverage in order to not touch the Drupal core.
+  5.1 Install XDebug or enable XDebug fastly by uncommenting the following line to [xdebug] -> "zend_extension = ..." in php.ini file of your server.
+    - Restart the server to apply the changes.
+  5.2 Code Coverage makes changes in the Drupal Core. If you do not "touch" the Drupal core, do not apply Code Coverage patch.
+    - You may apply the patch of SmarTest (smartest.patch) over Code coverage to avoid hacking Drupal core.
   5.3 Install Code Coverage.
 6- Install SmarTest.
 
@@ -50,12 +50,12 @@ Installation guide
 Maintainers
 -----------
 
-Ana B. Sánchez
-Sergio Segura
-Antonio Ruiz-Cortés
-Gabriel Hidalgo
+- Ana B. Sánchez
+- Sergio Segura
+- Antonio Ruiz-Cortés
+- Gabriel Hidalgo
 
-Supporting organizations: 
+Supporting organizations:
 -------------------------
 
 Applied Software Engineering (ISA) Funding
