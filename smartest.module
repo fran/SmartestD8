@@ -224,7 +224,7 @@ function smartest_menu() {
     'access arguments' => array('administer unit tests'),
     'file' => 'smartest.pages.inc',
   );
-   
+
   return $items;
 }
 
@@ -253,12 +253,12 @@ function smartest_menu() {
   $info = $simpletest_instance->getInfo();
 
   // @FIXME
-// l() expects a Url object, created from a route name or external URI.
-// $content['stop'] = array(
-//       '#type' => 'fieldset',
-//       '#id' => 'stop',
-//       '#description' => l(t('Stop process'), 'admin/config/development/testing-labs/results/' . $test_id),
-//     );
+  // l() expects a Url object, created from a route name or external URI.
+  // $content['stop'] = array(
+  //       '#type' => 'fieldset',
+  //       '#id' => 'stop',
+  //       '#description' => l(t('Stop process'), 'admin/config/development/testing-labs/results/' . $test_id),
+  //     );
 
 
   $batch = array(
@@ -309,7 +309,6 @@ function _smartest_batch_operation($test_list_init, $test_id, $date, &$context) 
   $size = count($test_list);
   $info = $test->getInfo();
 
-
   $field = $date['mday'] . ' ' . $date['mon'] . ' ' . $date['year'] . ' - ' . $date['hours'] . ':' . $date['minutes'];
   db_update('smartest_statistic')
     ->fields( array('last_execution' => $field))
@@ -331,12 +330,12 @@ function _smartest_batch_operation($test_list_init, $test_id, $date, &$context) 
 
   foreach (\Drupal\Core\Render\Element::children($test_results) as $class) {
     array_unshift($items, '<div class="simpletest-' . ($test_results[$class]['#fail'] + $test_results[$class]['#exception'] ? 'fail' : 'pass') . '">' . t('@name: @summary', array('@name' => $test_results[$class]['#name'], '@summary' => _simpletest_format_summary_line($test_results[$class]))) . '</div>');
-    
+
     if ($actual_group != $test_results[$class]['#group']) {
       db_update('smartest_statistic')
         ->fields(array( 'passes' => 0, 'fails' => 0, 'exceptions' => 0 ))
         ->condition('module', $test_results[$class]['#group'], '=')
-        ->execute();      
+        ->execute();
     }
 
     db_update('smartest_statistic')
@@ -365,7 +364,7 @@ function _smartest_batch_operation($test_list_init, $test_id, $date, &$context) 
     $content['results'][$class] = array(
         '#type' => 'fieldset',
         '#title' => t($class),
-        '#collapsible' => TRUE, 
+        '#collapsible' => TRUE,
         '#collapsed' => TRUE,
       );
     $content['results'][$class]['table'] = array(
@@ -383,8 +382,8 @@ function _smartest_batch_operation($test_list_init, $test_id, $date, &$context) 
   for ($i=0; $i<sizeof($items); $i++) {
     $context['message'] .= $items[$i];
     $context['message'] .= \Drupal::service("renderer")->render($table_items[$i]);
-  } 
-  
+  }
+
   // Save working values for the next iteration.
   $context['sandbox']['tests'] = $test_list;
   $context['sandbox']['test_results'] = $test_results;
@@ -394,7 +393,7 @@ function _smartest_batch_operation($test_list_init, $test_id, $date, &$context) 
   // Multistep processing: report progress.
   $context['finished'] = 1 - $size / $max;
 
-  //TimeOut 
+  //TimeOut
   $date = getdate();
   $date2 = new DateTime(getdate()['year'] . '-' . $date['mon'] . '-' . $date['mday'] . ' ' . $date['hours'] . ':' . $date['minutes'] . ':' . $date['seconds']);
 
@@ -459,9 +458,8 @@ function smartest_form_smartest_result_form_alter(&$form, &$form_state) {
   module_load_include('process.inc', 'code_coverage');
   if (code_coverage_process($test_id)) {
     // @FIXME
-// l() expects a Url object, created from a route name or external URI.
-// drupal_set_message(check_plain(t('View the !coverage_report_link for the test run.', array('!coverage_report_link' => l(t('code coverage report'), 'code_coverage/' . $test_id)))));
-
+    // l() expects a Url object, created from a route name or external URI.
+    // drupal_set_message(check_plain(t('View the !coverage_report_link for the test run.', array('!coverage_report_link' => l(t('code coverage report'), 'code_coverage/' . $test_id)))));
   }
 }
 
@@ -498,36 +496,34 @@ function _smartest_batch_mining(&$context) {
     $auth = '';
     if ($query_client['criteria'] != '' && $query_secret['criteria'] != '') {
       $auth = 'client_id=' . $query_client['criteria'] . '&client_secret=' . $query_secret['criteria'];
-    } 
+    }
   db_update('smartest_statistic')
     ->fields(array('git_changes' => 0))
     ->execute();
   $enables = module_list();
-  for ($page=1; $page < 550; $page++) { 
+  for ($page=1; $page < 550; $page++) {
     $context['finished'] = 1 - (1 - $page / 550);
     $url = 'https://api.github.com/repos/drupal/drupal/commits?page=' . $page . '&' . $auth;
     try{
       // @FIXME
-// drupal_http_request() has been replaced by the Guzzle HTTP client, which is bundled
-// with Drupal core.
-// 
-// 
-// @see https://www.drupal.org/node/1862446
-// @see http://docs.guzzlephp.org/en/latest
-// $value = drupal_http_request($url, $options = array());
+      // drupal_http_request() has been replaced by the Guzzle HTTP client, which is bundled
+      // with Drupal core.
+      //
+      // @see https://www.drupal.org/node/1862446
+      // @see http://docs.guzzlephp.org/en/latest
+      // $value = drupal_http_request($url, $options = array());
 
       $json = json_decode($value->data, TRUE);
       foreach ($json as $commit => $commit_array) {
         $commit_url = $commit_array['url'];
         try{
           // @FIXME
-// drupal_http_request() has been replaced by the Guzzle HTTP client, which is bundled
-// with Drupal core.
-// 
-// 
-// @see https://www.drupal.org/node/1862446
-// @see http://docs.guzzlephp.org/en/latest
-// $commit_value = drupal_http_request($commit_url . '?' . $auth, $options = array());
+          // drupal_http_request() has been replaced by the Guzzle HTTP client, which is bundled
+          // with Drupal core.
+          //
+          // @see https://www.drupal.org/node/1862446
+          // @see http://docs.guzzlephp.org/en/latest
+          // $commit_value = drupal_http_request($commit_url . '?' . $auth, $options = array());
 
           $commit_json = json_decode($commit_value->data, TRUE);
           if (in_array('files', $commit_json['files'][0])) {
@@ -548,12 +544,12 @@ function _smartest_batch_mining(&$context) {
           }
         }catch (Exception $e) {
           drupal_set_message(t('ERROR Accesing a commit'));
-        }     
-      } 
+        }
+      }
     }catch (Exception $e) {
       drupal_set_message(t('ERROR1 Accesing a repository commit'));
     }
   }
-    
+
 }
 

@@ -4,13 +4,12 @@
  */
 function smartest_dashboard_form($form, &$form_state) {
   // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_css(drupal_get_path('module', 'smartest') . '/styles/graph-menu.css');
+  // The Assets API has totally changed. CSS, JavaScript, and libraries are now
+  // attached directly to render arrays using the #attached property.
+  //
+  // @see https://www.drupal.org/node/2169605
+  // @see https://www.drupal.org/node/2408597
+  // drupal_add_css(drupal_get_path('module', 'smartest') . '/styles/graph-menu.css');
 
   $form['#attached']['js'] = array(
      drupal_get_path('module', 'smartest') . '/smartest.js',
@@ -140,7 +139,7 @@ function smartest_dashboard_form($form, &$form_state) {
       'test_execution_time' => t('Execution time'),
       'passes' => t('Passed tests'),
       'coverage' => t('Coverage'),
-      'git_changes' => t('Git changes'),            
+      'git_changes' => t('Git changes'),
     ),
     '#default_value' => 'cc',
   );
@@ -166,7 +165,7 @@ function smartest_dashboard_form($form, &$form_state) {
       'test_execution_time' => t('Execution time (seconds)'),
       'passes' => t('Passed tests'),
       'coverage' => t('Coverage'),
-      'git_changes' => t('Git changes'),            
+      'git_changes' => t('Git changes'),
     ),
   );
   $form['add-widget']['selectmodules'] = array(
@@ -294,11 +293,11 @@ function smartest_add_page_form_submit($form, &$form_state) {
   db_insert('smartest_widget')
     ->fields($fields)
     ->execute();
-  
+
   db_update('smartest_cache')
     ->fields(array('type' => $form_state['values']['title-page']))
     ->condition('cookie', 'dashboard_page', '=')
-    ->execute();  
+    ->execute();
 }
 
 function smartest_add_widget_form_submit($form, &$form_state) {
@@ -373,7 +372,7 @@ function smartest_close_widget_form_submit($form, &$form_state) {
 
 function update_statistics() {
   drupal_set_time_limit(60 * 5);
-  libraries_load('phploc');   
+  libraries_load('phploc');
   $modules = module_list();
   $files = array();
   foreach ($modules as $module => $value) {
@@ -538,7 +537,7 @@ class GraphicalWidget {
     }
     $this->chart['xaxis'] = array(
       '#type' => 'chart_xaxis',
-      '#labels' => $xaxis_oreder,   
+      '#labels' => $xaxis_oreder,
     );
     $this->chart['data'] = array(
       '#type' => 'chart_data',
@@ -560,14 +559,14 @@ class GraphicalWidget {
     $table['rows'][] = $rowt;
     $table['empty'] = t('No fields available.');
     // @FIXME
-// theme() has been renamed to _theme() and should NEVER be called directly.
-// Calling _theme() directly can alter the expected output and potentially
-// introduce security issues (see https://www.drupal.org/node/2195739). You
-// should use renderable arrays instead.
-// 
-// 
-// @see https://www.drupal.org/node/2195739
-// $content = theme('table', $table);
+    // theme() has been renamed to _theme() and should NEVER be called directly.
+    // Calling _theme() directly can alter the expected output and potentially
+    // introduce security issues (see https://www.drupal.org/node/2195739). You
+    // should use renderable arrays instead.
+    //
+    //
+    // @see https://www.drupal.org/node/2195739
+    // $content = theme('table', $table);
 
     return $content;
   }
@@ -595,7 +594,7 @@ class GraphicalWidget {
     }
     $this->chart['xaxis'] = array(
       '#type' => 'chart_xaxis',
-      '#labels' => $xaxis_oreder,   
+      '#labels' => $xaxis_oreder,
     );
     $this->chart['fails'] = array(
       '#type' => 'chart_data',
@@ -622,14 +621,14 @@ class GraphicalWidget {
     $table['rows'][] = $rowt;
     $table['empty'] = t('No fields available.');
     // @FIXME
-// theme() has been renamed to _theme() and should NEVER be called directly.
-// Calling _theme() directly can alter the expected output and potentially
-// introduce security issues (see https://www.drupal.org/node/2195739). You
-// should use renderable arrays instead.
-// 
-// 
-// @see https://www.drupal.org/node/2195739
-// $content = theme('table', $table);
+    // theme() has been renamed to _theme() and should NEVER be called directly.
+    // Calling _theme() directly can alter the expected output and potentially
+    // introduce security issues (see https://www.drupal.org/node/2195739). You
+    // should use renderable arrays instead.
+    //
+    //
+    // @see https://www.drupal.org/node/2195739
+    // $content = theme('table', $table);
 
     return $content;
   }
@@ -647,14 +646,14 @@ class CloudWidget {
   public $max_size;
   public $min_size;
 
-  function CloudWidget($c_title, $c_size_criteria, 
+  function CloudWidget($c_title, $c_size_criteria,
     $c_color_criteria, $c_modules) {
 
     $this->size_criteria = $c_size_criteria;
     $this->color_criteria = $c_color_criteria;
     $this->title = $c_title;
     $this->modules = $c_modules;
-    $id = $this->title; 
+    $id = $this->title;
     $this->form[$id] =  array(
       '#type' => 'fieldset',
       '#title' => t('<h-titles>Size: ' . identify_criteria($this->size_criteria) . ' - Color: ' . identify_criteria($this->color_criteria) . '</h-titles>'),
@@ -692,7 +691,7 @@ class CloudWidget {
     $sizeaux = $size_query->execute();
     $color_query = db_select('smartest_statistic')
       ->fields('smartest_statistic', array('module', $this->color_criteria));
-  
+
     if (!in_array('ALL', $this->modules)) {
       $color_query->condition('module', $this->modules, 'IN');
     }
@@ -703,7 +702,7 @@ class CloudWidget {
     $row2 = $coloraux->fetchAssoc();
     $description = identify_criteria($this->size_criteria) . ': ' . $row1[$this->size_criteria] . ' - ' .
     identify_criteria($this->color_criteria) . ': ' . $row2[$this->color_criteria];
-    $result = $result . ' ' . $this->get_display_term($row1['module'], $this->get_word_index($this->max_size, $this->min_size, $row1[$this->size_criteria]), 
+    $result = $result . ' ' . $this->get_display_term($row1['module'], $this->get_word_index($this->max_size, $this->min_size, $row1[$this->size_criteria]),
     $this->get_word_index($this->max_color, $this->min_color, $row2[$this->color_criteria]), $description);
   }
 
@@ -713,7 +712,7 @@ class CloudWidget {
 
   function get_display_term($name, $size_index, $color_index, $description) {
     $result = "<span class='tagclouds-term level" . $size_index . " lvlc" . $color_index . "' title='" . $description . "'>" . $name . "</span>\n";
-    return $result; 
+    return $result;
   }
 
   function get_word_index($max, $min, $value) {
@@ -765,7 +764,7 @@ class HeaderWidget {
   public $test_total = 0;
   public $time = 0;
   public $fails_modules = array();
-  public $n_fails_modules = array(); 
+  public $n_fails_modules = array();
   public $lessCoverage = array();
   public $lessCoverageModule = array();
   function HeaderWidget($h_title) {
@@ -801,7 +800,7 @@ class HeaderWidget {
       $this->test_passes = $total_pass;
       $this->test_exceptions = $total_excep;
       $this->test_fails = $total_fails;
-      $this->coverage = ($total_executed / $total_executable) * 100;              
+      $this->coverage = ($total_executed / $total_executable) * 100;
     }
     else {
       $this->failed_percent = '0';
@@ -810,7 +809,7 @@ class HeaderWidget {
       $this->test_passes = '0';
       $this->test_exceptions = '0';
       $this->test_fails = '0';
-      $this->coverage = '0';          
+      $this->coverage = '0';
     }
     $this->time = get_format_time($total_time);
 
@@ -829,13 +828,13 @@ class HeaderWidget {
 
   function generate_header_widget() {
     // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_css(drupal_get_path('module', 'smartest') . '/styles/graph-menu.css');
+    // The Assets API has totally changed. CSS, JavaScript, and libraries are now
+    // attached directly to render arrays using the #attached property.
+    //
+    //
+    // @see https://www.drupal.org/node/2169605
+    // @see https://www.drupal.org/node/2408597
+    // drupal_add_css(drupal_get_path('module', 'smartest') . '/styles/graph-menu.css');
 
     $widget[$this->title] =  array(
       '#type' => 'fieldset',
@@ -902,13 +901,13 @@ class HeaderWidget {
           if ($i != 0) {
             $description .= ", ";
           }
-          $description .= '<degrade' . $i . '>' . $this->fails_modules[$i] 
+          $description .= '<degrade' . $i . '>' . $this->fails_modules[$i]
             . '(' . $this->n_fails_modules[$i] . ')</degrade' . $i . '>';
         }
       }
       else {
       $description = 'no data available';
-      } 
+      }
     }
     $widget[$this->title]['modules-failed'] =  array(
       '#type' => 'fieldset',
@@ -923,7 +922,7 @@ class HeaderWidget {
       '#attributes' => array(
         'class' => array('header', 'header-content', 'test-passes')
       ),
-    );  
+    );
     return $widget;
   }
 }
