@@ -1,4 +1,5 @@
 <?php
+
 namespace Drupal\smartest;
 
 class SmartestTestForm extends FormBase {
@@ -158,8 +159,8 @@ class SmartestTestForm extends FormBase {
       }
     }
     $query = db_query('SELECT l.last_variable, l.last_order, l.id
-                    AS items 
-                    FROM {smartest_prioritization} l  
+                    AS items
+                    FROM {smartest_prioritization} l
                     ORDER BY l.id');
 
     $order = 'DESC';

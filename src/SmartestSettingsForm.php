@@ -1,4 +1,5 @@
 <?php
+
 namespace Drupal\smartest;
 
 class SmartestSettingsForm extends ConfigFormBase {
@@ -56,7 +57,6 @@ class SmartestSettingsForm extends ConfigFormBase {
        '#default_value' => \Drupal::config('smartet.tests')->get('simpletest_verbose'),
      );
 
-
     $form['httpauth'] = [
       '#type' => 'fieldset',
       '#title' => t('HTTP authentication'),
@@ -78,7 +78,6 @@ class SmartestSettingsForm extends ConfigFormBase {
          ),
          '#default_value' => \Drupal::config('smartest.settings')->get('simpletest_httpauth_method'),
        );
-
 
      $username = \Drupal::config('smartest.settings')->get('simpletest_httpauth_username');
      $password = \Drupal::config('smartest.settings')->get('simpletest_httpauth_password');

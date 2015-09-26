@@ -13,7 +13,7 @@ function smartest_test_form($form) {
       ->condition('id', 'prioritization_test', '=')
       ->fields('smartest_prioritization', array('last_variable', 'last_order'))
       ->execute()
-      ->fetchAssoc(); 
+      ->fetchAssoc();
   $prior = $query_prior['last_variable'];
   $order = $query_prior['last_order'];
 
@@ -21,18 +21,18 @@ function smartest_test_form($form) {
       ->condition('cookie', 'timeout', '=')
       ->fields('smartest_cache', array('criteria', 'type'))
       ->execute()
-      ->fetchAssoc(); 
+      ->fetchAssoc();
   $time = $query_time['criteria'];
   $meassure = $query_time['type'];
 
   // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_css(drupal_get_path('module', 'smartest') . '/smartest.css');
+  // The Assets API has totally changed. CSS, JavaScript, and libraries are now
+  // attached directly to render arrays using the #attached property.
+  //
+  //
+  // @see https://www.drupal.org/node/2169605
+  // @see https://www.drupal.org/node/2408597
+  // drupal_add_css(drupal_get_path('module', 'smartest') . '/smartest.css');
 
   $form['settings'] = array(
     '#type' => 'fieldset',
@@ -85,7 +85,7 @@ function smartest_test_form($form) {
     '#type' => 'fieldset',
     '#title' => \Drupal\Component\Utility\SafeMarkup::checkPlain(t($messages[0])),
     '#description' => \Drupal\Component\Utility\SafeMarkup::checkPlain(t($messages[1])),
-  ); 
+  );
   $form['tests']['table'] = array(
     '#theme' => 'smartest_test_table',
   );
@@ -99,12 +99,12 @@ function smartest_test_form($form) {
     foreach ($groups as $group => $tests) {
       $info = system_get_info('module', $modval['module']);
 
-      if (in_array(strtolower(str_replace(" ", "_", $group)), $enableds) 
-        || strtolower($info['package']) == strtolower($group) 
+      if (in_array(strtolower(str_replace(" ", "_", $group)), $enableds)
+        || strtolower($info['package']) == strtolower($group)
         || strtolower($info['name']) == strtolower($group)) {
 
-        if ($modval['module'] == strtolower(str_replace(" ", "_", $group)) 
-          || strtolower($info['package']) == strtolower($group) 
+        if ($modval['module'] == strtolower(str_replace(" ", "_", $group))
+          || strtolower($info['package']) == strtolower($group)
           || strtolower($info['name']) == strtolower($group)) {
 
           $form['tests']['table'][$group] = array(
@@ -121,7 +121,7 @@ function smartest_test_form($form) {
       }
     }
   }
-  
+
   // Operation buttons.
   $form['tests']['op'] = array(
     '#type' => 'submit',
@@ -156,27 +156,24 @@ function smartest_settings_form($form, &$form_state) {
     '#title' => t('General'),
   );
   // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $form['general']['simpletest_clear_results'] = array(
-//     '#type' => 'checkbox',
-//     '#title' => t('Clear results after each complete test suite run'),
-//     '#description' => t('By default SimpleTest will clear the results after they have been viewed on the results page, but in some cases it may be useful to leave the results in the database. The results can then be viewed at <em>admin/config/development/testing/[test_id]</em>. The test ID can be found in the database, simpletest table, or kept track of when viewing the results the first time. Additionally, some modules may provide more analysis or features that require this setting to be disabled.'),
-//     '#default_value' => variable_get('simpletest_clear_results', TRUE),
-//   );
+  // This looks like another module's variable. You'll need to rewrite this call
+  // to ensure that it uses the correct configuration object.
+  // $form['general']['simpletest_clear_results'] = array(
+  //     '#type' => 'checkbox',
+  //     '#title' => t('Clear results after each complete test suite run'),
+  //     '#description' => t('By default SimpleTest will clear the results after they have been viewed on the results page, but in some cases it may be useful to leave the results in the database. The results can then be viewed at <em>admin/config/development/testing/[test_id]</em>. The test ID can be found in the database, simpletest table, or kept track of when viewing the results the first time. Additionally, some modules may provide more analysis or features that require this setting to be disabled.'),
+  //     '#default_value' => variable_get('simpletest_clear_results', TRUE),
+  //   );
 
   // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $form['general']['simpletest_verbose'] = array(
-//     '#type' => 'checkbox',
-//     '#title' => t('Provide verbose information when running tests'),
-//     '#description' => t('The verbose data will be printed along with the standard assertions and is useful for debugging. The verbose data will be erased between each test suite run. The verbose data output is very detailed and should only be used when debugging.'),
-//     '#default_value' => variable_get('simpletest_verbose', TRUE),
-//   );
-
+  // This looks like another module's variable. You'll need to rewrite this call
+  // to ensure that it uses the correct configuration object.
+  // $form['general']['simpletest_verbose'] = array(
+  //     '#type' => 'checkbox',
+  //     '#title' => t('Provide verbose information when running tests'),
+  //     '#description' => t('The verbose data will be printed along with the standard assertions and is useful for debugging. The verbose data will be erased between each test suite run. The verbose data output is very detailed and should only be used when debugging.'),
+  //     '#default_value' => variable_get('simpletest_verbose', TRUE),
+  //   );
 
   $form['httpauth'] = array(
     '#type' => 'fieldset',
@@ -186,34 +183,31 @@ function smartest_settings_form($form, &$form_state) {
     '#collapsed' => TRUE,
   );
   // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $form['httpauth']['simpletest_httpauth_method'] = array(
-//     '#type' => 'select',
-//     '#title' => t('Method'),
-//     '#options' => array(
-//       CURLAUTH_BASIC => t('Basic'),
-//       CURLAUTH_DIGEST => t('Digest'),
-//       CURLAUTH_GSSNEGOTIATE => t('GSS negotiate'),
-//       CURLAUTH_NTLM => t('NTLM'),
-//       CURLAUTH_ANY => t('Any'),
-//       CURLAUTH_ANYSAFE => t('Any safe'),
-//     ),
-//     '#default_value' => variable_get('simpletest_httpauth_method', CURLAUTH_BASIC),
-//   );
+  // This looks like another module's variable. You'll need to rewrite this call
+  // to ensure that it uses the correct configuration object.
+  // $form['httpauth']['simpletest_httpauth_method'] = array(
+  //     '#type' => 'select',
+  //     '#title' => t('Method'),
+  //     '#options' => array(
+  //       CURLAUTH_BASIC => t('Basic'),
+  //       CURLAUTH_DIGEST => t('Digest'),
+  //       CURLAUTH_GSSNEGOTIATE => t('GSS negotiate'),
+  //       CURLAUTH_NTLM => t('NTLM'),
+  //       CURLAUTH_ANY => t('Any'),
+  //       CURLAUTH_ANYSAFE => t('Any safe'),
+  //     ),
+  //     '#default_value' => variable_get('simpletest_httpauth_method', CURLAUTH_BASIC),
+  //   );
 
   // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $username = variable_get('simpletest_httpauth_username');
+  // This looks like another module's variable. You'll need to rewrite this call
+  // to ensure that it uses the correct configuration object.
+  // $username = variable_get('simpletest_httpauth_username');
 
   // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $password = variable_get('simpletest_httpauth_password');
+  // This looks like another module's variable. You'll need to rewrite this call
+  // to ensure that it uses the correct configuration object.
+  // $password = variable_get('simpletest_httpauth_password');
 
   $form['httpauth']['simpletest_httpauth_username'] = array(
     '#type' => 'textfield',
@@ -244,7 +238,7 @@ function smartest_prioritization_form_submit($form, &$form_state) {
     db_update('smartest_prioritization')
       ->fields($fields)
       ->execute();
-      
+
   $timeout_time = $form_state['values']['input'];
   $timeout_meassure = $form_state['values']['meassure'];
   $fields_time = array();
@@ -274,7 +268,7 @@ function smartest_prioritization_form_submit($form, &$form_state) {
   if ($auth_query['type'] == 'false') {
     send_criteria_report($variable, $order, $timeout_time, $timeout_meassure);
   }
-  
+
 }
 
 /**
@@ -301,8 +295,8 @@ function smartest_test_form_submit($form, &$form_state) {
     }
   }
   $query = db_query('SELECT l.last_variable, l.last_order, l.id
-                    AS items 
-                    FROM {smartest_prioritization} l  
+                    AS items
+                    FROM {smartest_prioritization} l
                     ORDER BY l.id');
 
   $order = 'DESC';
@@ -339,14 +333,12 @@ function smartest_result_form($form, &$form_state, $test_id) {
 
   // Load all classes and include CSS.
   // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_css(drupal_get_path('module', 'simpletest') . '/simpletest.css');
-
+  // The Assets API has totally changed. CSS, JavaScript, and libraries are now
+  // attached directly to render arrays using the #attached property.
+  //
+  // @see https://www.drupal.org/node/2169605
+  // @see https://www.drupal.org/node/2408597
+  // drupal_add_css(drupal_get_path('module', 'simpletest') . '/simpletest.css');
 
   // Keep track of which test cases passed or failed.
   $filter = array(
@@ -425,8 +417,8 @@ function smartest_result_form($form, &$form_state, $test_id) {
 
   // Actions.
   // @FIXME
-// url() expects a route name or an external URI.
-// $form['#action'] = url('admin/config/development/testing-labs/results/re-run');
+  // url() expects a route name or an external URI.
+  // $form['#action'] = url('admin/config/development/testing-labs/results/re-run');
 
   $form['action'] = array(
     '#type' => 'fieldset',
@@ -510,62 +502,6 @@ function smartest_clean_database() {
   db_truncate('smartest')->execute();
 }
 
-//------------------
-//--PRIORITIZATION--
-//------------------
-
-class Prioritization {
-  /*
-  *$modules: List of classes to be tested
-  *$variable: String with  the variable to be meassured
-  *$order: Order string, 'ASC' or 'DESC'
-  */
-  function get_statistics_prioritization($modules, $variable, $order) {
-    $result = array();
-
-    if ($variable!='none') {
-      $query = db_select('smartest_statistic')
-        ->fields('smartest_statistic', array('module', $variable))
-        ->condition('module', $modules, 'IN')
-        ->orderBy($variable, $order)
-        ->execute();
-    }
-    else {
-      $query = db_select('smartest_statistic')
-        ->fields('smartest_statistic', array('module'))
-        ->condition('module', $modules, 'IN')
-        ->execute();
-    }
-
-    while ($row = $query->fetchAssoc()) {
-      $result[] = $row;
-    }
-
-    return $result;
-  }
-  /*
-  *$class_name: test class name
-  */
-  function find_module_name_by_test_class($class_name) {
-    $class = new $class_name;
-    $module_name = strtolower($class->getInfo()['group']);
-    return $module_name;
-  }
-
-  function alter_order_test_list($tests_list, $order_array) {
-    $tests_list_result = array();
-    foreach ($order_array as $module_stat => $value) {
-      foreach ($tests_list as $test_class => $val) {
-        $class = new $val;
-        if (strtolower($class->getInfo()['group']) == $value['module']) {
-          $tests_list_result[] = $val;
-        }
-      }
-    }
-    return $tests_list_result;
-  }
-}
-
 function send_criteria_report($criteria, $order, $timeout_time, $timeout_meassure) {
   global $user, $base_root;
   $query = db_select('smartest_cache')
@@ -592,13 +528,12 @@ function send_criteria_report($criteria, $order, $timeout_time, $timeout_meassur
       'data' => \Drupal\Component\Serialization\Json::encode($data),
     );
     // @FIXME
-// drupal_http_request() has been replaced by the Guzzle HTTP client, which is bundled
-// with Drupal core.
-// 
-// 
-// @see https://www.drupal.org/node/1862446
-// @see http://docs.guzzlephp.org/en/latest
-// drupal_http_request('https://labs.isa.us.es:8181/smartest-report/report', $options);
+    // drupal_http_request() has been replaced by the Guzzle HTTP client, which is bundled
+    // with Drupal core.
+    //
+    // @see https://www.drupal.org/node/1862446
+    // @see http://docs.guzzlephp.org/en/latest
+    // drupal_http_request('https://labs.isa.us.es:8181/smartest-report/report', $options);
 
     //drupal_http_request('http://localhost:8080/smartest-report/report', $options);
 
@@ -622,32 +557,28 @@ function theme_smartest_test_table($variables) {
   $table = $variables['table'];
 
   // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_css(drupal_get_path('module', 'simpletest') . '/simpletest.css');
+  // The Assets API has totally changed. CSS, JavaScript, and libraries are now
+  // attached directly to render arrays using the #attached property.
+  //
+  // @see https://www.drupal.org/node/2169605
+  // @see https://www.drupal.org/node/2408597
+  // drupal_add_css(drupal_get_path('module', 'simpletest') . '/simpletest.css');
 
   // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_js(drupal_get_path('module', 'simpletest') . '/simpletest.js');
+  // The Assets API has totally changed. CSS, JavaScript, and libraries are now
+  // attached directly to render arrays using the #attached property.
+  //
+  // @see https://www.drupal.org/node/2169605
+  // @see https://www.drupal.org/node/2408597
+  // drupal_add_js(drupal_get_path('module', 'simpletest') . '/simpletest.js');
 
   // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_js('misc/tableselect.js');
-
+  // The Assets API has totally changed. CSS, JavaScript, and libraries are now
+  // attached directly to render arrays using the #attached property.
+  //
+  // @see https://www.drupal.org/node/2169605
+  // @see https://www.drupal.org/node/2408597
+  // drupal_add_js('misc/tableselect.js');
 
   // Create header for test selection table.
   $header = array(
@@ -659,20 +590,18 @@ function theme_smartest_test_table($variables) {
 
   // Define the images used to expand/collapse the test groups.
   // @FIXME
-// theme() has been renamed to _theme() and should NEVER be called directly.
-// Calling _theme() directly can alter the expected output and potentially
-// introduce security issues (see https://www.drupal.org/node/2195739). You
-// should use renderable arrays instead.
-// 
-// 
-// @see https://www.drupal.org/node/2195739
-// $js = array(
-//     'images' => array(
-//       theme('image', array('path' => 'misc/menu-collapsed.png', 'width' => 7, 'height' => 7, 'alt' => t('Expand'), 'title' => t('Expand'))) . ' <a href="#" class="simpletest-collapse">(' . t('Expand') . ')</a>',
-//       theme('image', array('path' => 'misc/menu-expanded.png', 'width' => 7, 'height' => 7, 'alt' => t('Collapse'), 'title' => t('Collapse'))) . ' <a href="#" class="simpletest-collapse">(' . t('Collapse') . ')</a>',
-//     ),
-//   );
-
+  // theme() has been renamed to _theme() and should NEVER be called directly.
+  // Calling _theme() directly can alter the expected output and potentially
+  // introduce security issues (see https://www.drupal.org/node/2195739). You
+  // should use renderable arrays instead.
+  //
+  // @see https://www.drupal.org/node/2195739
+  // $js = array(
+  //     'images' => array(
+  //       theme('image', array('path' => 'misc/menu-collapsed.png', 'width' => 7, 'height' => 7, 'alt' => t('Expand'), 'title' => t('Expand'))) . ' <a href="#" class="simpletest-collapse">(' . t('Expand') . ')</a>',
+  //       theme('image', array('path' => 'misc/menu-expanded.png', 'width' => 7, 'height' => 7, 'alt' => t('Collapse'), 'title' => t('Collapse'))) . ' <a href="#" class="simpletest-collapse">(' . t('Collapse') . ')</a>',
+  //     ),
+  //   );
 
   $criteria_query = db_select('smartest_prioritization')
     ->fields('smartest_prioritization', array('last_variable'))
@@ -786,7 +715,7 @@ function theme_smartest_test_table($variables) {
       );
 
       $rows[] = array(
-        'data' => $row, 
+        'data' => $row,
         'class' => array($test_class . '-test', ($collapsed ? 'js-hide' : '')));
     }
     $js['simpletest-test-group-' . $test_class] = $current_js;
@@ -795,152 +724,32 @@ function theme_smartest_test_table($variables) {
 
   // Add js array of settings.
   // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_js(array('simpleTest' => $js), 'setting');
-
+  // The Assets API has totally changed. CSS, JavaScript, and libraries are now
+  // attached directly to render arrays using the #attached property.
+  //
+  //
+  // @see https://www.drupal.org/node/2169605
+  // @see https://www.drupal.org/node/2408597
+  // drupal_add_js(array('simpleTest' => $js), 'setting');
 
   if (empty($rows)) {
     return '<strong>' . t('No tests to display.') . '</strong>';
   }
   else {
     // @FIXME
-// theme() has been renamed to _theme() and should NEVER be called directly.
-// Calling _theme() directly can alter the expected output and potentially
-// introduce security issues (see https://www.drupal.org/node/2195739). You
-// should use renderable arrays instead.
-// 
-// 
-// @see https://www.drupal.org/node/2195739
-// return theme('table', array(
-//       'header' => $header,
-//       'rows' => $rows,
-//       'attributes' => array(
-//         'id' => 'simpletest-form-table'
-//       )
-//     ));
-
+    // theme() has been renamed to _theme() and should NEVER be called directly.
+    // Calling _theme() directly can alter the expected output and potentially
+    // introduce security issues (see https://www.drupal.org/node/2195739). You
+    // should use renderable arrays instead.
+    //
+    // @see https://www.drupal.org/node/2195739
+    // return theme('table', array(
+    //       'header' => $header,
+    //       'rows' => $rows,
+    //       'attributes' => array(
+    //         'id' => 'simpletest-form-table'
+    //       )
+    //     ));
   }
 }
 
-//------------------------
-//--------Messages--------
-//------------------------
-class Messages {
-   
-  static $LOC_TITLE                 = 'Ordering of tests based on the prioritization criterion selected: Lines of Code';
-  static $LOC_DESCRIPTION_ASC       = 'Modules with a lower number of LoC (Lines of Code) will have higher priority to be tested.';
-  static $LOC_DESCRIPTION_DESC      = 'Modules with a higher number of LoC (Lines of Code) will have higher priority to be tested.';
-  static $CC_TITLE                  = 'Ordering of tests based on the prioritization criterion selected: Ciclomatic Complexity';
-  static $CC_DESCRIPTION_ASC        = 'Modules with a lower CC (Cyclomatic Complexity) will have higher priority to be tested.';
-  static $CC_DESCRIPTION_DESC       = 'Modules with a higher CC (Cyclomatic Complexity) will have higher priority to be tested.';
-  static $FAILS_TITLE               = 'Ordering of tests based on the prioritization criterion selected: Faults Test';
-  static $FAILS_DESCRIPTION_ASC     = 'Modules with a lower number of faults found on last tests executions, will have higher priority to be tested.';
-  static $FAILS_DESCRIPTION_DESC    = 'Modules with a higher number of faults found on last tests executions, will have higher priority to be tested.';
-  static $EXC_TITLE                 = 'Ordering of tests based on the prioritization criterion selected: Tests with Eexceptions';
-  static $EXC_DESCRIPTION_ASC       = 'Modules with a lower number of exceptions found on last tests executions, will have higher priority to be tested.';
-  static $EXC_DESCRIPTION_DESC      = 'Modules with a higher number of exceptions found on last tests executions, will have higher priority to be tested.';
-  static $LASTS_TITLE               = 'Ordering of tests based on the prioritization criterion selected: Lasts Executions';
-  static $LASTS_DESCRIPTION_ASC     = 'Modules with older test executions have higher priority to execute their tests.';
-  static $LASTS_DESCRIPTION_DESC    = 'Modules with newer executions have higher priority to execute their tests.';
-  static $EXC_TIME_TITLE            = 'Ordering of tests based on the prioritization criterion selected: Execution Time';
-  static $EXC_TIME_DESCRIPTION_ASC  = 'Modules with a lower time of executions will have higher priority to be tested.';
-  static $EXC_TIME_DESCRIPTION_DESC = 'Modules with a higher time of executions will have higher priority to be tested.';
-  static $COVERAGE                  = 'Ordering of tests based on the prioritization criterion selected: COVERAGE';
-  static $COVERAGE_ASC              = 'Modules with a lower code coverage will have higher priority to be tested.';
-  static $COVERAGE_DESC             = 'Modules with a higher code coverage will have higher priority to be tested.';
-  static $GIT_TITLE                 = 'Ordering of tests based on the prioritization criterion selected: GIT CHANGES';
-  static $GIT_DESCRIPTION_ASC       = 'Modules with lower number of git changes will have higher priority to be tested.';
-  static $GIT_DESCRIPTION_DESC      = 'Modules with higher number of git changes will have higher priority to be tested.';
-
-  static function getMessages($prior, $order) {
-    $result = array();
-    switch ($prior) {
-      case 'loc':
-        $result[] = self::$LOC_TITLE;
-        if ($order == 'ASC') {
-          $result[] = self::$LOC_DESCRIPTION_ASC;
-        }
-        else {
-          $result[] = self::$LOC_DESCRIPTION_DESC;
-        }
-        break;
-
-      case 'cc':
-      $result[] = self::$CC_TITLE;
-        if ($order == 'ASC') {
-          $result[] = self::$CC_DESCRIPTION_ASC;
-        }
-        else {
-          $result[] = self::$CC_DESCRIPTION_DESC;
-        }
-        break;
-      
-      case 'exceptions':
-        $result[] = self::$EXC_TITLE;
-        if ($order == 'ASC') {
-          $result[] = self::$EXC_DESCRIPTION_ASC;
-        }
-        else {
-          $result[] = self::$EXC_DESCRIPTION_DESC;
-        }
-        break;
-
-      case 'fails':
-        $result[] = self::$FAILS_TITLE;
-        if ($order == 'ASC') {
-          $result[] = self::$FAILS_DESCRIPTION_ASC;
-        }
-        else {
-          $result[] = self::$FAILS_DESCRIPTION_DESC;
-        }
-        break;
-
-      case 'last_execution':
-        $result[] = self::$LASTS_TITLE;
-        if ($order == 'ASC') {
-          $result[] = self::$LASTS_DESCRIPTION_ASC;
-        }
-        else {
-          $result[] = self::$LASTS_DESCRIPTION_DESC;
-        }
-        break;
-
-      case 'test_execution_time':
-        $result[] = self::$EXC_TIME_TITLE;
-        if ($order == 'ASC') {
-          $result[] = self::$EXC_TIME_DESCRIPTION_ASC;
-        }
-        else {
-          $result[] = self::$EXC_TIME_DESCRIPTION_DESC;
-        }
-        break;
-
-      case 'coverage':
-        $result[] = self::$COVERAGE;
-        if ($order == 'ASC') {
-          $result[] = self::$COVERAGE_ASC;
-        }
-        else {
-          $result[] = self::$COVERAGE_DESC;
-        }
-        break;
-
-      case 'git_changes':
-        $result[] = self::$GIT_TITLE;
-        if ($order == 'ASC') {
-          $result[] = self::$GIT_DESCRIPTION_ASC;
-        }
-        else {
-          $result[] = self::$GIT_DESCRIPTION_DESC;
-        }
-      break;
-
-    }
-    return $result;
-  }
-}

@@ -1,8 +1,9 @@
 <?php
+
 namespace Drupal\smartest;
 
 class Messages {
-   
+
   static $LOC_TITLE                 = 'Ordering of tests based on the prioritization criterion selected: Lines of Code';
   static $LOC_DESCRIPTION_ASC       = 'Modules with a lower number of LoC (Lines of Code) will have higher priority to be tested.';
   static $LOC_DESCRIPTION_DESC      = 'Modules with a higher number of LoC (Lines of Code) will have higher priority to be tested.';
@@ -50,7 +51,7 @@ class Messages {
           $result[] = self::$CC_DESCRIPTION_DESC;
         }
         break;
-      
+
       case 'exceptions':
         $result[] = self::$EXC_TITLE;
         if ($order == 'ASC') {

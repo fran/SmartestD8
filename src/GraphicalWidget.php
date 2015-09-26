@@ -1,15 +1,17 @@
 <?php
+
 namespace Drupal\smartest;
 
 class GraphicalWidget {
+
   public $modules = array();
   public $title;
   public $type;
   public $criteria;
   public $n_element;
   public $form;
-
   public $chart;
+
   function GraphicalWidget($g_title, $g_modules = array(), $g_type = 'column', $g_criteria = 'loc', $g_n_element = 5) {
     $this->title = $g_title;
     $this->modules = $g_modules;
@@ -41,6 +43,7 @@ class GraphicalWidget {
       '#submit' => array('smartest_close_widget_form_submit'),
     );
   }
+
   function generate_grahical_widget() {
     $id = $this->title;
     if ($this->criteria == 'test') {
@@ -73,7 +76,7 @@ class GraphicalWidget {
     }
     $this->chart['xaxis'] = array(
       '#type' => 'chart_xaxis',
-      '#labels' => $xaxis_oreder,   
+      '#labels' => $xaxis_oreder,
     );
     $this->chart['data'] = array(
       '#type' => 'chart_data',
@@ -95,14 +98,13 @@ class GraphicalWidget {
     $table['rows'][] = $rowt;
     $table['empty'] = t('No fields available.');
     // @FIXME
-// theme() has been renamed to _theme() and should NEVER be called directly.
-// Calling _theme() directly can alter the expected output and potentially
-// introduce security issues (see https://www.drupal.org/node/2195739). You
-// should use renderable arrays instead.
-// 
-// 
-// @see https://www.drupal.org/node/2195739
-// $content = theme('table', $table);
+    // theme() has been renamed to _theme() and should NEVER be called directly.
+    // Calling _theme() directly can alter the expected output and potentially
+    // introduce security issues (see https://www.drupal.org/node/2195739). You
+    // should use renderable arrays instead.
+    //
+    // @see https://www.drupal.org/node/2195739
+    // $content = theme('table', $table);
 
     return $content;
   }
@@ -130,7 +132,7 @@ class GraphicalWidget {
     }
     $this->chart['xaxis'] = array(
       '#type' => 'chart_xaxis',
-      '#labels' => $xaxis_oreder,   
+      '#labels' => $xaxis_oreder,
     );
     $this->chart['fails'] = array(
       '#type' => 'chart_data',
@@ -157,15 +159,15 @@ class GraphicalWidget {
     $table['rows'][] = $rowt;
     $table['empty'] = t('No fields available.');
     // @FIXME
-// theme() has been renamed to _theme() and should NEVER be called directly.
-// Calling _theme() directly can alter the expected output and potentially
-// introduce security issues (see https://www.drupal.org/node/2195739). You
-// should use renderable arrays instead.
-// 
-// 
-// @see https://www.drupal.org/node/2195739
-// $content = theme('table', $table);
+    // theme() has been renamed to _theme() and should NEVER be called directly.
+    // Calling _theme() directly can alter the expected output and potentially
+    // introduce security issues (see https://www.drupal.org/node/2195739). You
+    // should use renderable arrays instead.
+    //
+    // @see https://www.drupal.org/node/2195739
+    // $content = theme('table', $table);
 
     return $content;
   }
+
 }

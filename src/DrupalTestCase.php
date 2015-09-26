@@ -1,4 +1,5 @@
 <?php
+
 namespace Drupal\smartest;
 
 /**
@@ -7,6 +8,7 @@ namespace Drupal\smartest;
  * Do not extend this class, use one of the subclasses in this file.
  */
 abstract class DrupalTestCase {
+
   /**
    * The test run ID.
    *
@@ -139,12 +141,7 @@ abstract class DrupalTestCase {
 
     // We do not use a ternary operator here to allow a breakpoint on
     // test failure.
-    if ($status == 'pass') {
-      return TRUE;
-    }
-    else {
-      return FALSE;
-    }
+    return ($status == 'pass');
   }
 
   /**
@@ -452,9 +449,8 @@ abstract class DrupalTestCase {
       $class_safe = str_replace('\\', '_', get_class($this));
       $url = file_create_url($this->originalFileDirectory . '/simpletest/verbose/' . $class_safe . '-' . $id . '.html');
       // @FIXME
-// l() expects a Url object, created from a route name or external URI.
-// $this->error(l(t('Verbose message'), $url, array('attributes' => array('target' => '_blank'))), 'User notice');
-
+      // l() expects a Url object, created from a route name or external URI.
+      // $this->error(l(t('Verbose message'), $url, array('attributes' => array('target' => '_blank'))), 'User notice');
     }
   }
 
@@ -475,31 +471,27 @@ abstract class DrupalTestCase {
     // Initialize verbose debugging.
     $class = get_class($this);
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// simpletest_verbose(NULL, variable_get('file_public_path', conf_path() . '/files'), str_replace('\\', '_', $class));
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // simpletest_verbose(NULL, variable_get('file_public_path', conf_path() . '/files'), str_replace('\\', '_', $class));
 
 
     // HTTP auth settings (<username>:<password>) for the simpletest browser
     // when sending requests to the test site.
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $this->httpauth_method = variable_get('simpletest_httpauth_method', CURLAUTH_BASIC);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $this->httpauth_method = variable_get('simpletest_httpauth_method', CURLAUTH_BASIC);
 
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $username = variable_get('simpletest_httpauth_username', NULL);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $username = variable_get('simpletest_httpauth_username', NULL);
 
     // @FIXME
-// // @FIXME
-// // This looks like another module's variable. You'll need to rewrite this call
-// // to ensure that it uses the correct configuration object.
-// $password = variable_get('simpletest_httpauth_password', NULL);
+    // This looks like another module's variable. You'll need to rewrite this call
+    // to ensure that it uses the correct configuration object.
+    // $password = variable_get('simpletest_httpauth_password', NULL);
 
     if ($username && $password) {
       $this->httpauth_credentials = $username . ':' . $password;
@@ -532,7 +524,6 @@ abstract class DrupalTestCase {
           'caller' => $caller,
         );
         code_coverage_start();
-        //module_invoke("code_coverage", "code_coverage_start");
 
         $completion_check_id = DrupalTestCase::insertAssert($this->testId, $class, FALSE, t('The test did not complete due to a fatal error.'), 'Completion check', $caller);
         $this->setUp();
@@ -554,7 +545,6 @@ abstract class DrupalTestCase {
 
         unset($GLOBALS['drupal_test_info']);
         code_coverage_stop(FALSE);
-        //module_invoke("code_coverage", "code_coverage_stop");
 
       }
     }
@@ -562,9 +552,8 @@ abstract class DrupalTestCase {
     drupal_get_messages();
     restore_error_handler();
 
-    
+
     code_coverage_record($this->testId);
-    //module_invoke("code_coverage", "code_coverage_record");
 
   }
 

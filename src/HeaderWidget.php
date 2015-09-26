@@ -1,7 +1,9 @@
 <?php
+
 namespace Drupal\smartest;
 
 class HeaderWidget {
+
   public $title;
   public $failed_percent;
   public $success_percent;
@@ -13,9 +15,10 @@ class HeaderWidget {
   public $test_total = 0;
   public $time = 0;
   public $fails_modules = array();
-  public $n_fails_modules = array(); 
+  public $n_fails_modules = array();
   public $lessCoverage = array();
   public $lessCoverageModule = array();
+
   function HeaderWidget($h_title) {
     $this->title = $h_title;
     $total_fails = 0;
@@ -49,7 +52,7 @@ class HeaderWidget {
       $this->test_passes = $total_pass;
       $this->test_exceptions = $total_excep;
       $this->test_fails = $total_fails;
-      $this->coverage = ($total_executed / $total_executable) * 100;              
+      $this->coverage = ($total_executed / $total_executable) * 100;
     }
     else {
       $this->failed_percent = '0';
@@ -58,7 +61,7 @@ class HeaderWidget {
       $this->test_passes = '0';
       $this->test_exceptions = '0';
       $this->test_fails = '0';
-      $this->coverage = '0';          
+      $this->coverage = '0';
     }
     $this->time = get_format_time($total_time);
 
@@ -77,13 +80,12 @@ class HeaderWidget {
 
   function generate_header_widget() {
     // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_css(drupal_get_path('module', 'smartest') . '/styles/graph-menu.css');
+    // The Assets API has totally changed. CSS, JavaScript, and libraries are now
+    // attached directly to render arrays using the #attached property.
+    //
+    // @see https://www.drupal.org/node/2169605
+    // @see https://www.drupal.org/node/2408597
+    // drupal_add_css(drupal_get_path('module', 'smartest') . '/styles/graph-menu.css');
 
     $widget[$this->title] =  array(
       '#type' => 'fieldset',
@@ -150,13 +152,13 @@ class HeaderWidget {
           if ($i != 0) {
             $description .= ", ";
           }
-          $description .= '<degrade' . $i . '>' . $this->fails_modules[$i] 
+          $description .= '<degrade' . $i . '>' . $this->fails_modules[$i]
             . '(' . $this->n_fails_modules[$i] . ')</degrade' . $i . '>';
         }
       }
       else {
       $description = 'no data available';
-      } 
+      }
     }
     $widget[$this->title]['modules-failed'] =  array(
       '#type' => 'fieldset',
@@ -171,7 +173,7 @@ class HeaderWidget {
       '#attributes' => array(
         'class' => array('header', 'header-content', 'test-passes')
       ),
-    );  
+    );
     return $widget;
   }
 }
