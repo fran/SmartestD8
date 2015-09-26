@@ -553,7 +553,8 @@ function smartest_install() {
 function calculate_stats() {
   drupal_set_time_limit( 60 * 5000 );
 
-  $modules = module_list();
+  $moduleHandler = \Drupal::moduleHandler();
+  $modules = $moduleHandler->getModuleList();
   $files = array();
 
   foreach ($modules as $module => $value) {
@@ -568,7 +569,7 @@ function calculate_stats() {
     $results = $analyser->countFiles($files_root, FALSE);
 
     $fields = array(
-      'module'    => $module,
+      'module' => $module,
       'loc' => $results['ncloc'],
       'cc' => $results['methodCcnMax'],
       'cloc' => $results['cloc'],
